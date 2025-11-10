@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quvere Cloud - Premium Game Server Hosting</title>
+    <title>Quvera Cloud - Premium Game Server Hosting</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -54,17 +54,20 @@
         }
 
         /* Header */
-        header {
-            padding: 20px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(10, 10, 40, 0.8);
-            backdrop-filter: blur(10px);
-            position: relative;
-            z-index: 10;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
+       header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(10, 10, 40, 0.8); /* or your preferred background */
+    z-index: 1000; /* keep it above all other elements */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 40px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
 
         .logo-container {
             display: flex;
@@ -83,6 +86,14 @@
             margin-right: 10px;
             text-shadow: 0 0 10px rgba(108, 99, 255, 0.5);
         }
+        .logo img {
+    height: 50px;
+    width: auto;
+    filter: drop-shadow(0 0 10px rgba(108, 99, 255, 0.5));
+    transform: translateY(5px); /* move down by 3px */
+}
+
+
 
         .logo-text {
             font-size: 1.8rem;
@@ -751,9 +762,10 @@
     <header>
         <div class="logo-container" id="home-link">
             <div class="logo">
-                <i class="fas fa-cloud"></i>
-            </div>
-            <div class="logo-text">Quvere Cloud</div>
+  <img src="D:\VSC\logo.jpg" alt="Quvera Cloud Logo">
+</div>
+
+            <div class="logo-text">Quvera Cloud</div>
         </div>
         
         <!-- Navigation Menu -->
@@ -812,7 +824,7 @@
         <h2>About Us</h2>
         <div class="about-content">
             <div class="about-text">
-                <p>Quvere Cloud was founded in 2018 by a team of passionate gamers and server administrators who were frustrated with the limitations of existing hosting solutions. We set out to create a hosting platform that combines enterprise-grade hardware with gaming-optimized software.</p>
+                <p>Quvera Cloud was founded in 2018 by a team of passionate gamers and server administrators who were frustrated with the limitations of existing hosting solutions. We set out to create a hosting platform that combines enterprise-grade hardware with gaming-optimized software.</p>
                 <p>Today, we serve over 10,000 gaming communities worldwide, from small private servers to massive multiplayer networks. Our team of experts is available 24/7 to ensure your gaming experience is seamless and lag-free.</p>
                 <p>We believe that every gaming community deserves reliable, high-performance hosting without breaking the bank. That's why we offer competitive pricing without compromising on quality or support.</p>
             </div>
@@ -889,7 +901,7 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                 </div>
-                <p class="testimonial-text">"The performance of our SA-MP server improved dramatically after switching to Quvere Cloud. Zero lag even with 500+ players!"</p>
+                <p class="testimonial-text">"The performance of our SA-MP server improved dramatically after switching to Quvera Cloud. Zero lag even with 500+ players!"</p>
                 <div class="client-info">
                     <div class="client-avatar">A</div>
                     <div class="client-details">
@@ -923,7 +935,7 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                 </div>
-                <p class="testimonial-text">"We've been with Quvere Cloud for 2 years now. The uptime is flawless and the hardware is consistently powerful."</p>
+                <p class="testimonial-text">"We've been with Quvera Cloud for 2 years now. The uptime is flawless and the hardware is consistently powerful."</p>
                 <div class="client-info">
                     <div class="client-avatar">M</div>
                     <div class="client-details">
@@ -939,7 +951,7 @@
     <footer>
         <div class="footer-content">
             <div class="footer-column">
-                <h3>Quvere Cloud</h3>
+                <h3>Quvera Cloud</h3>
                 <p>Premium game server hosting with top-tier performance and 24/7 support for gaming communities worldwide.</p>
                 <button class="terms-btn" id="terms-btn">Terms & Conditions</button>
                 <div class="social-icons">
@@ -965,11 +977,11 @@
                 <div class="contact-info">
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
-                        <span>support@quvera.cloud</span>
+                        <span>support@Quvera.cloud</span>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-globe"></i>
-                        <span>https://quvera.cloud</span>
+                        <span>https://Quvera.cloud</span>
                     </div>
                 </div>
             </div>
@@ -986,7 +998,7 @@
             </div>
         </div>
         <div class="copyright">
-            <p>&copy; 2023 Quvere Cloud. All rights reserved.</p>
+            <p>&copy; 2023 Quvera Cloud. All rights reserved.</p>
         </div>
     </footer>
 
@@ -1029,24 +1041,24 @@
         });
 
         document.getElementById('games-nav').addEventListener('click', function() {
-            window.location.href = 'game-box.html';
+            window.location.href = 'file:///D:/VSC/game-box.html';
         });
 
         document.getElementById('infrastructure-nav').addEventListener('click', function() {
-            window.location.href = 'performace server.html';
+            window.location.href = 'file:///D:/VSC/performace server.html';
         });
 
         document.getElementById('security-nav').addEventListener('click', function() {
-            window.location.href = 'defense matrix.html';
+            window.location.href = 'file:///D:/VSC/defense%20matrix.html';
         });
 
         document.getElementById('store-nav').addEventListener('click', function() {
-            window.location.href = 'store.html';
+            window.location.href = 'file:///D:/VSC/store.html';
         });
 
         // Terms button functionality
         document.getElementById('terms-btn').addEventListener('click', function() {
-            window.location.href = 'terms and condition.html';
+            window.location.href = 'file:///D:/VSC/terms%20and%20contion.html';
         });
 
         // Set active navigation
@@ -1153,7 +1165,7 @@
         // Demo login functionality
         const loginBtn = document.querySelector('.login-btn');
         loginBtn.addEventListener('click', function() {
-            window.location.href = 'login page.html';
+            window.location.href = 'file:///D:/VSC/login%20page.html';
         });
 
         // Initialize the galaxy on page load
