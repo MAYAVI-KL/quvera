@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quvere Cloud - Premium Game Server Hosting</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #6c63ff;
+            --secondary: #ff6584;
+            --dark: #0c0c2e;
+            --darker: #05051a;
+            --light: #b8b8d0;
+            --lighter: #e0e0e0;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Galaxy Background */
+        #galaxy {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 4s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Header */
+        header {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 40, 0.8);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 10;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+
+        .logo {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-right: 10px;
+            text-shadow: 0 0 10px rgba(108, 99, 255, 0.5);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Navigation Menu */
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            margin-left: 40px;
+        }
+
+        .nav-item {
+            color: var(--lighter);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            color: white;
+            background: rgba(108, 99, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            background: rgba(108, 99, 255, 0.1);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .control-panel-icon {
+            font-size: 1.5rem;
+            color: var(--lighter);
+            cursor: pointer;
+            transition: color 0.3s, transform 0.3s;
+            padding: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .control-panel-icon:hover {
+            color: var(--primary);
+            transform: scale(1.1);
+            background: rgba(108, 99, 255, 0.2);
+        }
+
+        /* Login Switch */
+        .login-switch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .login-btn {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 100px 5%;
+            position: relative;
+            z-index: 5;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--light);
+        }
+
+        .changing-text-container {
+            margin: 30px 0;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .changing-text {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(108, 99, 255, 0.5);
+            transition: opacity 0.5s;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 35px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(108, 99, 255, 0.3);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 5%;
+            text-align: center;
+        }
+
+        .services h2 {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .services h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .services-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            width: 300px;
+            transition: transform 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-card i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            color: var(--light);
+        }
+
+        /* About Us Section */
+        .about {
+            padding: 80px 5%;
+            text-align: center;
+            background: rgba(20, 20, 50, 0.3);
+        }
+
+        .about h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .about h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .about-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+            text-align: left;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        .about-stats {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .stat {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 20px;
+            width: 150px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--light);
+            font-size: 0.9rem;
+        }
+
+        /* Control Panel */
+        .control-panel {
+            background: rgba(20, 20, 50, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 800px;
+            margin: 50px auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+        }
+
+        .control-panel.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .control-panel h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .control-panel h2 i {
+            color: var(--primary);
+        }
+
+        .control-item {
+            margin-bottom: 25px;
+        }
+
+        .control-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .slider-container {
+            background: rgba(255, 255, 255, 0.1);
+            height: 10px;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .slider-fill {
+            height: 100%;
+            border-radius: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 50%;
+            transition: width 0.3s;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            background: transparent;
+            outline: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 10px rgba(108, 99, 255, 0.5);
+        }
+
+        .reset-btn {
+            display: block;
+            margin: 30px auto 0;
+            padding: 10px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .reset-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 5%;
+            text-align: center;
+        }
+
+        .testimonials h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .testimonials p.subtitle {
+            font-size: 1.2rem;
+            color: var(--light);
+            margin-bottom: 50px;
+        }
+
+        .testimonial-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            width: 350px;
+            text-align: left;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stars {
+            color: #ffc107;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: var(--lighter);
+        }
+
+        .client-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .client-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .client-details h4 {
+            margin-bottom: 5px;
+        }
+
+        .client-details p {
+            color: var(--light);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 10, 30, 0.9);
+            padding: 50px 5% 30px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .footer-column p, .footer-column a {
+            color: var(--light);
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: var(--primary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: var(--primary);
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .payment-methods i {
+            font-size: 2rem;
+            color: var(--light);
+            transition: color 0.3s;
+        }
+
+        .payment-methods i:hover {
+            color: var(--primary);
+        }
+
+        .contact-info {
+            margin-top: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: var(--light);
+        }
+
+        .contact-item i {
+            margin-right: 10px;
+            width: 20px;
+            color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            font-size: 0.9rem;
+        }
+
+        /* Terms Button in Footer */
+        .terms-btn {
+            background: transparent;
+            color: var(--light);
+            border: 1px solid var(--light);
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        .terms-btn:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            background: rgba(108, 99, 255, 0.1);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .service-card, .testimonial-card {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* Close button for control panel */
+        .close-panel {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-panel:hover {
+            color: var(--secondary);
+        }
+
+        /* Overlay for control panel */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 99;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .changing-text {
+                font-size: 2rem;
+            }
+            
+            .services-container, .testimonial-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .service-card, .testimonial-card {
+                width: 100%;
+                max-width: 400px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+            
+            .control-panel {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Galaxy Background -->
+    <div id="galaxy"></div>
+
+    <!-- Overlay for control panel -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo-container" id="home-link">
+            <div class="logo">
+                <i class="fas fa-cloud"></i>
+            </div>
+            <div class="logo-text">Quvere Cloud</div>
+        </div>
+        
+        <!-- Navigation Menu -->
+        <nav class="nav-menu">
+            <a class="nav-item active" id="home-nav">Home</a>
+            <a class="nav-item" id="games-nav">Games</a>
+            <a class="nav-item" id="infrastructure-nav">Infrastructure</a>
+            <a class="nav-item" id="security-nav">Security</a>
+            <a class="nav-item" id="store-nav">Store</a>
+        </nav>
+        
+        <div class="nav-right">
+            <div class="control-panel-icon" id="control-panel-toggle">
+                <i class="fas fa-sliders-h"></i>
+            </div>
+            <div class="login-switch">
+                <button class="login-btn">Login</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>Powerful Game Server Hosting</h1>
+        <p>Experience blazing-fast performance with our premium hosting solutions for gaming communities of all sizes.</p>
+        <div class="changing-text-container">
+            <div class="changing-text" id="changing-text">SERVER HOSTING</div>
+        </div>
+        <a href="#" class="cta-button">Get Started Today</a>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <h2>Our Services</h2>
+        <div class="services-container">
+            <div class="service-card">
+                <i class="fas fa-server"></i>
+                <h3>Game Server Hosting</h3>
+                <p>High-performance hosting for all popular games with DDoS protection and instant setup.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-cloud"></i>
+                <h3>VPS Hosting</h3>
+                <p>Scalable virtual private servers with SSD storage and full root access.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-gamepad"></i>
+                <h3>Dedicated Servers</h3>
+                <p>Bare metal servers with maximum performance for demanding applications.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="about">
+        <h2>About Us</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Quvere Cloud was founded in 2018 by a team of passionate gamers and server administrators who were frustrated with the limitations of existing hosting solutions. We set out to create a hosting platform that combines enterprise-grade hardware with gaming-optimized software.</p>
+                <p>Today, we serve over 10,000 gaming communities worldwide, from small private servers to massive multiplayer networks. Our team of experts is available 24/7 to ensure your gaming experience is seamless and lag-free.</p>
+                <p>We believe that every gaming community deserves reliable, high-performance hosting without breaking the bank. That's why we offer competitive pricing without compromising on quality or support.</p>
+            </div>
+            <div class="about-stats">
+                <div class="stat">
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-label">Happy Clients</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Uptime</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Support</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Game Types</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Control Panel -->
+    <section class="control-panel" id="control-panel">
+        <button class="close-panel" id="close-panel">
+            <i class="fas fa-times"></i>
+        </button>
+        <h2><i class="fas fa-sliders-h"></i> Server Control Panel</h2>
+        <div class="control-item">
+            <div class="control-header">
+                <span>CPU Usage</span>
+                <span id="cpu-value">50%</span>
+            </div>
+            <div class="slider-container">
+                <div class="slider-fill" id="cpu-fill"></div>
+                <input type="range" min="1" max="100" value="50" class="slider" id="cpu-slider">
+            </div>
+        </div>
+        <div class="control-item">
+            <div class="control-header">
+                <span>Memory</span>
+                <span id="memory-value">50%</span>
+            </div>
+            <div class="slider-container">
+                <div class="slider-fill" id="memory-fill"></div>
+                <input type="range" min="1" max="100" value="50" class="slider" id="memory-slider">
+            </div>
+        </div>
+        <div class="control-item">
+            <div class="control-header">
+                <span>Storage</span>
+                <span id="storage-value">50%</span>
+            </div>
+            <div class="slider-container">
+                <div class="slider-fill" id="storage-fill"></div>
+                <input type="range" min="1" max="100" value="50" class="slider" id="storage-slider">
+            </div>
+        </div>
+        <button class="reset-btn" id="reset-btn">Reset All to 50%</button>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <h2>What Our Clients Say</h2>
+        <p class="subtitle">Join thousands of satisfied gaming communities</p>
+        <div class="testimonial-container">
+            <div class="testimonial-card">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"The performance of our SA-MP server improved dramatically after switching to Quvere Cloud. Zero lag even with 500+ players!"</p>
+                <div class="client-info">
+                    <div class="client-avatar">A</div>
+                    <div class="client-details">
+                        <h4>Alex Rodriguez</h4>
+                        <p>SA-MP Community Owner</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"Their support team is incredible. They helped us optimize our custom resources and the server runs buttery smooth now."</p>
+                <div class="client-info">
+                    <div class="client-avatar">S</div>
+                    <div class="client-details">
+                        <h4>Sarah Chen</h4>
+                        <p>FiveM Server Admin</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"We've been with Quvere Cloud for 2 years now. The uptime is flawless and the hardware is consistently powerful."</p>
+                <div class="client-info">
+                    <div class="client-avatar">M</div>
+                    <div class="client-details">
+                        <h4>Marcus Johnson</h4>
+                        <p>Minecraft Network Owner</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Quvere Cloud</h3>
+                <p>Premium game server hosting with top-tier performance and 24/7 support for gaming communities worldwide.</p>
+                <button class="terms-btn" id="terms-btn">Terms & Conditions</button>
+                <div class="social-icons">
+                    <a href="https://discord.gg/zFbY5Na6" target="_blank"><i class="fab fa-discord"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Services</h3>
+                <a href="#">Game Server Hosting</a>
+                <a href="#">VPS Hosting</a>
+                <a href="#">Dedicated Servers</a>
+                <a href="#">DDoS Protection</a>
+                <a href="#">Server Management</a>
+            </div>
+            <div class="footer-column">
+                <h3>Support</h3>
+                <a href="#">Knowledge Base</a>
+                <a href="#">Support Tickets</a>
+                <a href="#">Server Status</a>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>support@quvera.cloud</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-globe"></i>
+                        <span>https://quvera.cloud</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Payments We Accept</h3>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-paypal" title="PayPal"></i>
+                    <i class="fab fa-google-pay" title="Google Pay"></i>
+                    <i class="fas fa-credit-card" title="Razorpay"></i>
+                </div>
+                <p style="margin-top: 15px; color: var(--light); font-size: 0.9rem;">
+                    We accept PayPal, Google Pay, and Razorpay for secure and convenient payments.
+                </p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Quvere Cloud. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Create galaxy background with stars
+        function createGalaxy() {
+            const galaxy = document.getElementById('galaxy');
+            const starCount = 400;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                const size = Math.random() * 3 + 1;
+                const delay = Math.random() * 4;
+                const duration = 2 + Math.random() * 3;
+                
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.animationDelay = `${delay}s`;
+                star.style.animationDuration = `${duration}s`;
+                
+                galaxy.appendChild(star);
+            }
+        }
+
+        // Home link functionality
+        document.getElementById('home-link').addEventListener('click', function() {
+            document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Navigation functionality
+        document.getElementById('home-nav').addEventListener('click', function() {
+            document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
+            setActiveNav('home-nav');
+        });
+
+        document.getElementById('games-nav').addEventListener('click', function() {
+            window.location.href = 'game-box.html';
+        });
+
+        document.getElementById('infrastructure-nav').addEventListener('click', function() {
+            window.location.href = 'performace server.html';
+        });
+
+        document.getElementById('security-nav').addEventListener('click', function() {
+            window.location.href = 'defense matrix.html';
+        });
+
+        document.getElementById('store-nav').addEventListener('click', function() {
+            window.location.href = 'store.html';
+        });
+
+        // Terms button functionality
+        document.getElementById('terms-btn').addEventListener('click', function() {
+            window.location.href = 'terms and condition.html';
+        });
+
+        // Set active navigation
+        function setActiveNav(activeId) {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active');
+            });
+            document.getElementById(activeId).classList.add('active');
+        }
+
+        // Control panel toggle
+        const controlPanelToggle = document.getElementById('control-panel-toggle');
+        const controlPanel = document.getElementById('control-panel');
+        const closePanel = document.getElementById('close-panel');
+        const overlay = document.getElementById('overlay');
+
+        controlPanelToggle.addEventListener('click', function() {
+            controlPanel.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closePanel.addEventListener('click', function() {
+            controlPanel.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        overlay.addEventListener('click', function() {
+            controlPanel.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Initialize sliders
+        const cpuSlider = document.getElementById('cpu-slider');
+        const memorySlider = document.getElementById('memory-slider');
+        const storageSlider = document.getElementById('storage-slider');
+        
+        const cpuValue = document.getElementById('cpu-value');
+        const memoryValue = document.getElementById('memory-value');
+        const storageValue = document.getElementById('storage-value');
+        
+        const cpuFill = document.getElementById('cpu-fill');
+        const memoryFill = document.getElementById('memory-fill');
+        const storageFill = document.getElementById('storage-fill');
+        
+        const resetBtn = document.getElementById('reset-btn');
+        
+        // Update slider values and fill
+        function updateSlider(slider, valueElement, fillElement) {
+            const value = slider.value;
+            valueElement.textContent = `${value}%`;
+            fillElement.style.width = `${value}%`;
+        }
+        
+        // Event listeners for sliders
+        cpuSlider.addEventListener('input', function() {
+            updateSlider(cpuSlider, cpuValue, cpuFill);
+        });
+        
+        memorySlider.addEventListener('input', function() {
+            updateSlider(memorySlider, memoryValue, memoryFill);
+        });
+        
+        storageSlider.addEventListener('input', function() {
+            updateSlider(storageSlider, storageValue, storageFill);
+        });
+        
+        // Reset button functionality
+        resetBtn.addEventListener('click', function() {
+            cpuSlider.value = 50;
+            memorySlider.value = 50;
+            storageSlider.value = 50;
+            
+            updateSlider(cpuSlider, cpuValue, cpuFill);
+            updateSlider(memorySlider, memoryValue, memoryFill);
+            updateSlider(storageSlider, storageValue, storageFill);
+        });
+        
+        // Initialize slider values
+        updateSlider(cpuSlider, cpuValue, cpuFill);
+        updateSlider(memorySlider, memoryValue, memoryFill);
+        updateSlider(storageSlider, storageValue, storageFill);
+        
+        // Changing text effect
+        const services = ["SERVER HOSTING", "GAME HOSTING", "VPS HOSTING"];
+        let currentIndex = 0;
+        const changingText = document.getElementById('changing-text');
+        
+        function changeServiceText() {
+            changingText.style.opacity = 0;
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % services.length;
+                changingText.textContent = services[currentIndex];
+                changingText.style.opacity = 1;
+            }, 500);
+        }
+        
+        // Change text every 3 seconds
+        setInterval(changeServiceText, 3000);
+        
+        // Demo login functionality
+        const loginBtn = document.querySelector('.login-btn');
+        loginBtn.addEventListener('click', function() {
+            window.location.href = 'login page.html';
+        });
+
+        // Initialize the galaxy on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            createGalaxy();
+        });
+    </script>
+</body>
+</html>

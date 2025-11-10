@@ -1,0 +1,2530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPS Hosting Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --secondary: #64748b;
+            --accent: #f59e0b;
+            --dark-bg: #0f172a;
+            --dark-card: #1e293b;
+            --dark-border: #334155;
+            --light-text: #f8fafc;
+            --success: #10b981;
+            --danger: #ef4444;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            --radius: 16px;
+            --glow: 0 0 20px rgba(139, 92, 246, 0.7);
+            --glow-hover: 0 0 30px rgba(139, 92, 246, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Dynamic Background */
+        .dynamic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(139, 92, 246, 0) 70%);
+            animation: float 25s infinite linear;
+            filter: blur(10px);
+        }
+
+        .bg-circle:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .bg-circle:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            left: 80%;
+            animation-delay: -5s;
+        }
+
+        .bg-circle:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            top: 30%;
+            left: 60%;
+            animation-delay: -10s;
+        }
+
+        .bg-circle:nth-child(4) {
+            width: 250px;
+            height: 250px;
+            top: 70%;
+            left: 10%;
+            animation-delay: -15s;
+        }
+
+        .bg-circle:nth-child(5) {
+            width: 350px;
+            height: 350px;
+            top: 20%;
+            left: 70%;
+            animation-delay: -7s;
+        }
+
+        .bg-circle:nth-child(6) {
+            width: 180px;
+            height: 180px;
+            top: 80%;
+            left: 30%;
+            animation-delay: -12s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            25% {
+                transform: translate(30px, 20px) rotate(90deg) scale(1.1);
+            }
+            50% {
+                transform: translate(0, 40px) rotate(180deg) scale(1);
+            }
+            75% {
+                transform: translate(-30px, 20px) rotate(270deg) scale(1.1);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg) scale(1);
+            }
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 3rem 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: var(--glow);
+            letter-spacing: 1px;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem 2rem;
+        }
+
+        .cart-icon {
+            position: relative;
+            font-size: 1.5rem;
+            color: var(--light-text);
+            cursor: pointer;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .cart-icon:hover {
+            background: var(--primary);
+            box-shadow: var(--glow);
+            transform: translateY(-3px);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent);
+            color: var(--dark-bg);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.7);
+        }
+
+        /* Main Navigation */
+        .main-nav {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+            padding: 0 1rem;
+        }
+
+        .nav-card {
+            background: linear-gradient(145deg, var(--dark-card), #1a2438);
+            border-radius: var(--radius);
+            padding: 2.5rem 2rem;
+            width: 320px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            border: 1px solid var(--dark-border);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.7s;
+        }
+
+        .nav-card:hover::before {
+            left: 100%;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.5), var(--glow-hover);
+            border-color: var(--primary);
+        }
+
+        .nav-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.5));
+        }
+
+        .nav-title {
+            font-size: 1.7rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .nav-desc {
+            color: var(--secondary);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* VPS Navigation */
+        .vps-nav {
+            display: none;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+            padding: 0 1rem;
+        }
+
+        .vps-nav.active {
+            display: flex;
+        }
+
+        /* Plans Container */
+        .plans-container {
+            display: none;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .plans-container.active {
+            display: block;
+        }
+
+        .plans-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .plans-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .plans-subtitle {
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Plan Card */
+        .plan-card {
+            background: linear-gradient(145deg, var(--dark-card), #1a2438);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+            position: relative;
+            border: 1px solid var(--dark-border);
+        }
+
+        .plan-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), var(--glow-hover);
+            border-color: var(--primary);
+        }
+
+        .plan-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .plan-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent);
+            color: var(--dark-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            z-index: 2;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.7);
+        }
+
+        .plan-header {
+            padding: 2rem 2rem 1.5rem;
+            border-bottom: 1px solid var(--dark-border);
+            position: relative;
+        }
+
+        .plan-name {
+            font-size: 1.7rem;
+            margin-bottom: 1rem;
+            color: var(--light-text);
+            font-weight: 700;
+        }
+
+        .plan-price-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        .plan-price {
+            font-size: 2.3rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+        }
+
+        .plan-period {
+            color: var(--secondary);
+            font-size: 1rem;
+        }
+
+        .plan-specs {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+
+        .spec-label {
+            font-weight: 600;
+            color: var(--light-text);
+            font-size: 1rem;
+        }
+
+        .spec-value {
+            color: var(--secondary);
+            text-align: right;
+            font-size: 0.95rem;
+        }
+
+        .plan-actions {
+            padding: 1.5rem 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .plan-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            font-size: 1rem;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+        }
+
+        .plan-button:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.8);
+            transform: translateY(-3px);
+        }
+
+        .btn-details {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            font-size: 1rem;
+        }
+
+        .btn-details:hover {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+            transform: translateY(-3px);
+        }
+
+        /* Cart Page */
+        .cart-page {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .cart-page.active {
+            display: block;
+        }
+
+        .cart-page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .cart-page-title {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .cart-page-subtitle {
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        .cart-items-container {
+            background: linear-gradient(145deg, var(--dark-card), #1a2438);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--dark-border);
+            box-shadow: var(--shadow);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--dark-border);
+            transition: all 0.3s ease;
+        }
+
+        .cart-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 1.5rem 1rem;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-info {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .item-price {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .item-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .quantity-btn {
+            background: var(--dark-bg);
+            border: 1px solid var(--dark-border);
+            color: var(--light-text);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1.2rem;
+        }
+
+        .quantity-btn:hover {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+        }
+
+        .quantity {
+            font-weight: 700;
+            min-width: 45px;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+
+        .remove-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1.1rem;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
+
+        .remove-btn:hover {
+            background: #dc2626;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.7);
+            transform: scale(1.1);
+        }
+
+        .cart-summary {
+            background: linear-gradient(145deg, var(--dark-card), #1a2438);
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--dark-border);
+            box-shadow: var(--shadow);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.2rem;
+            font-size: 1.2rem;
+        }
+
+        .summary-total {
+            font-weight: 800;
+            font-size: 1.5rem;
+            border-top: 1px solid var(--dark-border);
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .checkout-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: var(--radius);
+            font-weight: 700;
+            font-size: 1.2rem;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+        }
+
+        .checkout-btn:hover {
+            background: #0da271;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.7);
+            transform: translateY(-3px);
+        }
+
+        .continue-shopping {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: var(--radius);
+            font-weight: 700;
+            font-size: 1.2rem;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .continue-shopping:hover {
+            background: #475569;
+            transform: translateY(-3px);
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 4rem;
+            color: var(--secondary);
+        }
+
+        .empty-cart i {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-border);
+        }
+
+        .empty-cart h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-cart p {
+            font-size: 1.1rem;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 1.2rem 1.8rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 1100;
+            transform: translateX(150%);
+            transition: transform 0.4s ease;
+        }
+
+        .notification.active {
+            transform: translateX(0);
+        }
+
+        /* Back Button */
+        .back-button {
+            display: none;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 auto 3rem;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow);
+        }
+
+        .back-button:hover {
+            background: #475569;
+            transform: translateY(-3px);
+        }
+
+        .back-button.active {
+            display: block;
+        }
+
+        /* Back to Main Button */
+        .back-to-main {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--dark-card);
+            color: var(--light-text);
+            border: 1px solid var(--dark-border);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-to-main:hover {
+            background: var(--primary);
+            box-shadow: var(--glow);
+            transform: translateY(-3px);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, var(--dark-card), #1a2438);
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), var(--glow);
+            border: 1px solid var(--dark-border);
+        }
+
+        .modal-header {
+            padding: 2rem 2rem 1rem;
+            border-bottom: 1px solid var(--dark-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            color: var(--light-text);
+            font-weight: 700;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--secondary);
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+        }
+
+        .modal-specs {
+            margin-bottom: 2rem;
+        }
+
+        .modal-specs h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .modal-specs ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .modal-specs li {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .modal-specs i {
+            color: var(--primary);
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .modal-features {
+            margin-bottom: 2rem;
+        }
+
+        .modal-features h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .modal-features ul {
+            list-style: none;
+            padding-left: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .modal-features li {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .modal-features i {
+            color: var(--success);
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid var(--dark-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Interactive Elements */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(139, 92, 246, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+            }
+        }
+
+        .glow-text {
+            text-shadow: 0 0 10px rgba(139, 92, 246, 0.7);
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translate(0, 0px); }
+            50% { transform: translate(0, -15px); }
+            100% { transform: translate(0, 0px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .plans-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-nav, .vps-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-card {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.5rem;
+            }
+            
+            .item-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .modal-features ul {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-footer {
+                flex-direction: column;
+                gap: 1.5rem;
+                align-items: stretch;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+            
+            .back-to-main {
+                top: 10px;
+                left: 10px;
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Dynamic Background -->
+    <div class="dynamic-bg">
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+    </div>
+
+    <!-- Back to Main Button -->
+    <button class="back-to-main" onclick="goToMainPage()">
+        <i class="fas fa-arrow-left"></i>
+        Back to Main
+    </button>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo floating">VPSHost</div>
+            <div class="cart-icon pulse" onclick="showCartPage()">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+        </div>
+        <p class="tagline">Premium Virtual Private Servers with Enterprise-Grade Performance</p>
+    </header>
+
+    <!-- Main Navigation -->
+    <div class="main-nav" id="main-nav">
+        <div class="nav-card" onclick="redirectToDiscord()">
+            <div class="nav-icon">
+                <i class="fas fa-globe"></i>
+            </div>
+            <h3 class="nav-title">Web Hosting</h3>
+            <p class="nav-desc">Fast and reliable web hosting solutions for your websites</p>
+        </div>
+        
+        <div class="nav-card" onclick="showVPSNav()">
+            <div class="nav-icon">
+                <i class="fas fa-server"></i>
+            </div>
+            <h3 class="nav-title">VPS Hosting</h3>
+            <p class="nav-desc">High-performance Virtual Private Servers for your applications</p>
+        </div>
+        
+        <div class="nav-card" onclick="redirectToDiscord()">
+            <div class="nav-icon">
+                <i class="fas fa-gamepad"></i>
+            </div>
+            <h3 class="nav-title">Game Hosting</h3>
+            <p class="nav-desc">Optimized game servers with low latency and DDoS protection</p>
+        </div>
+    </div>
+
+    <!-- VPS Navigation -->
+    <div class="vps-nav" id="vps-nav">
+        <div class="nav-card" onclick="showPlans('ryzen9')">
+            <div class="nav-icon">
+                <i class="fas fa-microchip"></i>
+            </div>
+            <h3 class="nav-title">Ryzen 9 VPS</h3>
+            <p class="nav-desc">High-performance AMD Ryzen 9 5900X servers with OVH VAC Shield</p>
+        </div>
+        
+        <div class="nav-card" onclick="showPlans('ryzen5')">
+            <div class="nav-icon">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <h3 class="nav-title">Ryzen 5 VPS</h3>
+            <p class="nav-desc">AMD Ryzen 5 5600X servers with OVH Game Protection in Singapore</p>
+        </div>
+        
+        <div class="nav-card" onclick="showPlans('amd-epyc')">
+            <div class="nav-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3 class="nav-title">AMD EPYC VPS</h3>
+            <p class="nav-desc">Enterprise-grade AMD EPYC servers with real-time DDoS mitigation</p>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <button class="back-button" id="back-button" onclick="goBack()">
+        <i class="fas fa-arrow-left"></i> Back to VPS Selection
+    </button>
+
+    <!-- Ryzen 9 Plans -->
+    <div class="plans-container" id="ryzen9-plans">
+        <div class="plans-header">
+            <h2 class="plans-title">🇮🇳 Ryzen 9 VPS – India (OVH VAC Shield Protected)</h2>
+            <p class="plans-subtitle">Powered by AMD Ryzen 9 5900X with OVH VAC DDoS Shield</p>
+        </div>
+        
+        <div class="plans-grid">
+            <!-- Plan 1 -->
+            <div class="plan-card">
+                <div class="plan-image" style="background: linear-gradient(135deg, #1e3a8a, #8b5cf6), url('https://images.unsplash.com/photo-1597852074816-d933c7d2b988?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); background-blend-mode: overlay; background-size: cover;"></div>
+                <div class="plan-badge">Popular</div>
+                <div class="plan-header">
+                    <h3 class="plan-name">VPS Plan 1</h3>
+                    <div class="plan-price-container">
+                        <span class="old-price">₹999</span>
+                        <span class="plan-price">₹699</span>
+                    </div>
+                    <div class="plan-period">per month</div>
+                </div>
+                <div class="plan-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">CPU</span>
+                        <span class="spec-value">2 vCores Ryzen 9 5900X</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">4 GB DDR4 ECC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">40 GB Gen 4 NVMe</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Bandwidth</span>
+                        <span class="spec-value">4 TB @ 1 Gbps</span>
+                    </div>
+                </div>
+                <div class="plan-actions">
+                    <button class="plan-button" onclick="addToCart('Ryzen 9 VPS Plan 1', 699)">Add to Cart</button>
+                    <button class="btn-details" onclick="showPlanDetails('ryzen9', 1)">View Details</button>
+                </div>
+            </div>
+            
+            <!-- Plan 2 -->
+            <div class="plan-card">
+                <div class="plan-image" style="background: linear-gradient(135deg, #1e3a8a, #8b5cf6), url('https://images.unsplash.com/photo-1597852074816-d933c7d2b988?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); background-blend-mode: overlay; background-size: cover;"></div>
+                <div class="plan-header">
+                    <h3 class="plan-name">VPS Plan 2</h3>
+                    <div class="plan-price-container">
+                        <span class="old-price">₹1,499</span>
+                        <span class="plan-price">₹1,099</span>
+                    </div>
+                    <div class="plan-period">per month</div>
+                </div>
+                <div class="plan-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">CPU</span>
+                        <span class="spec-value">4 vCores Ryzen 9 5900X</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">8 GB DDR4 ECC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">60 GB Gen 4 NVMe</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Bandwidth</span>
+                        <span class="spec-value">8 TB @ 1 Gbps</span>
+                    </div>
+                </div>
+                <div class="plan-actions">
+                    <button class="plan-button" onclick="addToCart('Ryzen 9 VPS Plan 2', 1099)">Add to Cart</button>
+                    <button class="btn-details" onclick="showPlanDetails('ryzen9', 2)">View Details</button>
+                </div>
+            </div>
+            
+            <!-- Plan 3 -->
+            <div class="plan-card">
+                <div class="plan-image" style="background: linear-gradient(135deg, #1e3a8a, #8b5cf6), url('https://images.unsplash.com/photo-1597852074816-d933c7d2b988?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); background-blend-mode: overlay; background-size: cover;"></div>
+                <div class="plan-header">
+                    <h3 class="plan-name">VPS Plan 3</h3>
+                    <div class="plan-price-container">
+                        <span class="old-price">₹2,199</span>
+                        <span class="plan-price">₹1,699</span>
+                    </div>
+                    <div class="plan-period">per month</div>
+                </div>
+                <div class="plan-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">CPU</span>
+                        <span class="spec-value">4 vCores Ryzen 9 5900X</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">16 GB DDR4 ECC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">50 GB Gen 4 NVMe</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Bandwidth</span>
+                        <span class="spec-value">8 TB @ 1 Gbps</span>
+                    </div>
+                </div>
+                <div class="plan-actions">
+                    <button class="plan-button" onclick="addToCart('Ryzen 9 VPS Plan 3', 1699)">Add to Cart</button>
+                    <button class="btn-details" onclick="showPlanDetails('ryzen9', 3)">View Details</button>
+                </div>
+            </div>
+            
+            <!-- Plan 4 -->
+            <div class="plan-card">
+                <div class="plan-image" style="background: linear-gradient(135deg, #1e3a8a, #8b5cf6), url('https://images.unsplash.com/photo-1597852074816-d933c7d2b988?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); background-blend-mode: overlay; background-size: cover;"></div>
+                <div class="plan-header">
+                    <h3 class="plan-name">VPS Plan 4</h3>
+                    <div class="plan-price-container">
+                        <span class="old-price">₹2,499</span>
+                        <span class="plan-price">₹1,999</span>
+                    </div>
+                    <div class="plan-period">per month</div>
+                </div>
+                <div class="plan-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">CPU</span>
+                        <span class="spec-value">6 vCores Ryzen 9 5900X</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">16 GB DDR4 ECC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">80 GB Gen 4 NVMe</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Bandwidth</span>
+                        <span class="spec-value">3 TB @ 1 Gbps</span>
+                    </div>
+                </div>
+                <div class="plan-actions">
+                    <button class="plan-button" onclick="addToCart('Ryzen 9 VPS Plan 4', 1999)">Add to Cart</button>
+                    <button class="btn-details" onclick="showPlanDetails('ryzen9', 4)">View Details</button>
+                </div>
+            </div>
+            
+            <!-- Plan 5 -->
+            <div class="plan-card">
+                <div class="plan-image" style="background: linear-gradient(135deg, #1e3a8a, #8b5cf6), url('https://images.unsplash.com/photo-1597852074816-d933c7d2b988?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); background-blend-mode: overlay; background-size: cover;"></div>
+                <div class="plan-header">
+                    <h3 class="plan-name">VPS Plan 5</h3>
+                    <div class="plan-price-container">
+                        <span class="old-price">₹3,199</span>
+                        <span class="plan-price">₹2,499</span>
+                    </div>
+                    <div class="plan-period">per month</div>
+                </div>
+                <div class="plan-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">CPU</span>
+                        <span class="spec-value">8 vCores Ryzen 9 5900X</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">24 GB DDR4 ECC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">100 GB Gen 4 NVMe</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Bandwidth</span>
+                        <span class="spec-value">8 TB @ 1 Gbps</span>
+                    </div>
+                </div>
+                <div class="plan-actions">
+                    <button class="plan-button" onclick="addToCart('Ryzen 9 VPS Plan 5', 2499)">Add to Cart</button>
+                    <button class="btn-details" onclick="showPlanDetails('ryzen9', 5)">View Details</button>
+                </div>
+            </div>
+            
+            <!-- Plan 6 -->
+            <div class="plan-card">
+                <div class="plan-image" style="background: linear-gradient(135deg, #1e3a8a, #8b5cf6), url('https://images.unsplash.com/photo-1597852074816-d933c7d2b988?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); background-blend-mode: overlay; background-size: cover;"></div>
+                <div class="plan-badge">Best Value</div>
+                <div class="plan-header">
+                    <h3 class="plan-name">VPS Plan 6</h3>
+                    <div class="plan-price-container">
+                        <span class="old-price">₹4,199</span>
+                        <span class="plan-price">₹3,499</span>
+                    </div>
+                    <div class="plan-period">per month</div>
+                </div>
+                <div class="plan-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">CPU</span>
+                        <span class="spec-value">10 vCores Ryzen 9 5900X</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">32 GB DDR4 ECC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">120 GB Gen 4 NVMe</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Bandwidth</span>
+                        <span class="spec-value">8 TB @ 1 Gbps</span>
+                    </div>
+                </div>
+                <div class="plan-actions">
+                    <button class="plan-button" onclick="addToCart('Ryzen 9 VPS Plan 6', 3499)">Add to Cart</button>
+                    <button class="btn-details" onclick="showPlanDetails('ryzen9', 6)">View Details</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ryzen 5 Plans -->
+    <div class="plans-container" id="ryzen5-plans">
+        <div class="plans-header">
+            <h2 class="plans-title">🇸🇬 Ryzen 5 VPS – Singapore (OVH Game Protected)</h2>
+            <p class="plans-subtitle">Powered by AMD Ryzen 5 5600X with OVH Game Protection</p>
+        </div>
+        
+        <div class="plans-grid">
+            <!-- Plan 1 -->
+            <div class="plan-card">
+                <div class="plan-image" style="background: linear-gradient(135deg, #0f766e, #14b8a6), url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1174&q=80'); background-blend-mode: overlay; background-size: cover;"></div>
+                <div class="plan-badge">Popular</div>
+                <div class="plan-header">
+                    <h3 class="plan-name">VPS Plan 1</h3>
+                    <div class="plan-price-container">
+                        <span class="old-price">₹599</span>
+                        <span class="plan-price">₹399</span>
+                    </div>
+                    <div class="plan-period">per month</div>
+                </div>
+                <div class="plan-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">CPU</span>
+                        <span class="spec-value">2 vCores Ryzen 5 5600X</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">4 GB DDR4 ECC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">20 GB NVMe</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Bandwidth</span>
+                        <span class="spec-value">Unmetered @ 1 Gbps</span>
+                    </div>
+                </div>
+                <div class="plan-actions">
+                    <button class="plan-button" onclick="addToCart('Ryzen 5 VPS Plan 1', 399)">Add to Cart</button>
+                    <button class="btn-details" onclick="showPlanDetails('ryzen5', 1)">View Details</button>
+                </div>
+            </div>
+            
+            <!-- Plan 2 -->
+            <div class="plan-card">
+                <div class="plan-image" style="background: linear-gradient(135deg, #0f766e, #14b8a6), url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1174&q=80'); background-blend-mode: overlay; background-size: cover;"></div>
+                <div class="plan-header">
+                    <h3 class="plan-name">VPS Plan 2</h3>
+                    <div class="plan-price-container">
+                        <span class="old-price">₹799</span>
+                        <span class="plan-price">₹499</span>
+                    </div>
+                    <div class="plan-period">per month</div>
+                </div>
+                <div class="plan-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">CPU</span>
+                        <span class="spec-value">3 vCores Ryzen 5 5600X</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">4 GB DDR4 ECC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">40 GB NVMe</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Bandwidth</span>
+                        <span class="spec-value">Unmetered @ 1 Gbps</span>
+                    </div>
+                </div>
+                <div class="plan-actions">
+                    <button class="plan-button" onclick="addToCart('Ryzen 5 VPS Plan 2', 499)">Add to Cart</button>
+                    <button class="btn-details" onclick="showPlanDetails('ryzen5', 2)">View Details</button>
+                </div>
+            </div>
+            
+            <!-- Plan 3 -->
+            <div class="plan-card">
+                <div class="plan-image" style="background: linear-gradient(135deg, #0f766e, #14b8a6), url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1174&q=80'); background-blend-mode: overlay; background-size: cover;"></div>
+                <div class="plan-header">
+                    <h3 class="plan-name">VPS Plan 3</h3>
+                    <div class="plan-price-container">
+                        <span class="old-price">₹1,199</span>
+                        <span class="plan-price">₹899</span>
+                    </div>
+                    <div class="plan-period">per month</div>
+                </div>
+                <div class="plan-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">CPU</span>
+                        <span class="spec-value">4 vCores Ryzen 5 5600X</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">8 GB DDR4 ECC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">60 GB NVMe</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Bandwidth</span>
+                        <span class="spec-value">Unmetered @ 1 Gbps</span>
+                    </div>
+                </div>
+                <div class="plan-actions">
+                    <button class="plan-button" onclick="addToCart('Ryzen 5 VPS Plan 3', 899)">Add to Cart</button>
+                    <button class="btn-details" onclick="showPlanDetails('ryzen5', 3)">View Details</button>
+                </div>
+            </div>
+            
+            <!-- Plan 4 -->
+            <div class="plan-card">
+                <div class="plan-image" style="background: linear-gradient(135deg, #0f766e, #14b8a6), url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1174&q=80'); background-blend-mode: overlay; background-size: cover;"></div>
+                <div class="plan-header">
+                    <h3 class="plan-name">VPS Plan 4</h3>
+                    <div class="plan-price-container">
+                        <span class="old-price">₹1,999</span>
+                        <span class="plan-price">₹1,599</span>
+                    </div>
+                    <div class="plan-period">per month</div>
+                </div>
+                <div class="plan-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">CPU</span>
+                        <span class="spec-value">6 vCores Ryzen 5 5600X</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">16 GB DDR4 ECC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">80 GB NVMe</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Bandwidth</span>
+                        <span class="spec-value">Unmetered @ 1 Gbps</span>
+                    </div>
+                </div>
+                <div class="plan-actions">
+                    <button class="plan-button" onclick="addToCart('Ryzen 5 VPS Plan 4', 1599)">Add to Cart</button>
+                    <button class="btn-details" onclick="showPlanDetails('ryzen5', 4)">View Details</button>
+                </div>
+            </div>
+            
+            <!-- Plan 5 -->
+            <div class="plan-card">
+                <div class="plan-image" style="background: linear-gradient(135deg, #0f766e, #14b8a6), url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1174&q=80'); background-blend-mode: overlay; background-size: cover;"></div>
+                <div class="plan-badge">Best Value</div>
+                <div class="plan-header">
+                    <h3 class="plan-name">VPS Plan 5</h3>
+                    <div class="plan-price-container">
+                        <span class="old-price">₹2,499</span>
+                        <span class="plan-price">₹1,999</span>
+                    </div>
+                    <div class="plan-period">per month</div>
+                </div>
+                <div class="plan-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">CPU</span>
+                        <span class="spec-value">8 vCores Ryzen 5 5600X</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">24 GB DDR4 ECC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">100 GB NVMe</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Bandwidth</span>
+                        <span class="spec-value">Unmetered @ 1 Gbps</span>
+                    </div>
+                </div>
+                <div class="plan-actions">
+                    <button class="plan-button" onclick="addToCart('Ryzen 5 VPS Plan 5', 1999)">Add to Cart</button>
+                    <button class="btn-details" onclick="showPlanDetails('ryzen5', 5)">View Details</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AMD EPYC Plans -->
+    <div class="plans-container" id="amd-epyc-plans">
+        <div class="plans-header">
+            <h2 class="plans-title">⚡ AMD EPYC VPS – India (OVH Real-Time Mitigation)</h2>
+            <p class="plans-subtitle">Powered by AMD EPYC 4244P with OVH Real-Time DDoS Mitigation</p>
+        </div>
+        
+        <div class="plans-grid">
+            <!-- VPS17 -->
+            <div class="plan-card">
+                <div class="plan-image" style="background: linear-gradient(135deg, #7e22ce, #c084fc), url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80'); background-blend-mode: overlay; background-size: cover;"></div>
+                <div class="plan-badge">Popular</div>
+                <div class="plan-header">
+                    <h3 class="plan-name">VPS17</h3>
+                    <div class="plan-price-container">
+                        <span class="old-price">₹999</span>
+                        <span class="plan-price">₹799</span>
+                    </div>
+                    <div class="plan-period">per month</div>
+                </div>
+                <div class="plan-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">CPU</span>
+                        <span class="spec-value">2 vCPU AMD EPYC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">4 GB DDR5 ECC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">20 GB NVMe SSD</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Bandwidth</span>
+                        <span class="spec-value">4 TB @ 1 Gbps</span>
+                    </div>
+                </div>
+                <div class="plan-actions">
+                    <button class="plan-button" onclick="addToCart('AMD EPYC VPS17', 799)">Add to Cart</button>
+                    <button class="btn-details" onclick="showPlanDetails('amd-epyc', 17)">View Details</button>
+                </div>
+            </div>
+            
+            <!-- VPS18 -->
+            <div class="plan-card">
+                <div class="plan-image" style="background: linear-gradient(135deg, #7e22ce, #c084fc), url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80'); background-blend-mode: overlay; background-size: cover;"></div>
+                <div class="plan-header">
+                    <h3 class="plan-name">VPS18</h3>
+                    <div class="plan-price-container">
+                        <span class="old-price">₹1,799</span>
+                        <span class="plan-price">₹1,199</span>
+                    </div>
+                    <div class="plan-period">per month</div>
+                </div>
+                <div class="plan-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">CPU</span>
+                        <span class="spec-value">4 vCPU AMD EPYC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">4 GB DDR5 ECC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">40 GB NVMe SSD</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Bandwidth</span>
+                        <span class="spec-value">6 TB @ 1 Gbps</span>
+                    </div>
+                </div>
+                <div class="plan-actions">
+                    <button class="plan-button" onclick="addToCart('AMD EPYC VPS18', 1199)">Add to Cart</button>
+                    <button class="btn-details" onclick="showPlanDetails('amd-epyc', 18)">View Details</button>
+                </div>
+            </div>
+            
+            <!-- VPS19 -->
+            <div class="plan-card">
+                <div class="plan-image" style="background: linear-gradient(135deg, #7e22ce, #c084fc), url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80'); background-blend-mode: overlay; background-size: cover;"></div>
+                <div class="plan-header">
+                    <h3 class="plan-name">VPS19</h3>
+                    <div class="plan-price-container">
+                        <span class="old-price">₹2,099</span>
+                        <span class="plan-price">₹1,699</span>
+                    </div>
+                    <div class="plan-period">per month</div>
+                </div>
+                <div class="plan-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">CPU</span>
+                        <span class="spec-value">4 vCPU AMD EPYC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">8 GB DDR5 ECC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">60 GB NVMe SSD</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Bandwidth</span>
+                        <span class="spec-value">6 TB @ 1 Gbps</span>
+                    </div>
+                </div>
+                <div class="plan-actions">
+                    <button class="plan-button" onclick="addToCart('AMD EPYC VPS19', 1699)">Add to Cart</button>
+                    <button class="btn-details" onclick="showPlanDetails('amd-epyc', 19)">View Details</button>
+                </div>
+            </div>
+            
+            <!-- VPS20 -->
+            <div class="plan-card">
+                <div class="plan-image" style="background: linear-gradient(135deg, #7e22ce, #c084fc), url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80'); background-blend-mode: overlay; background-size: cover;"></div>
+                <div class="plan-header">
+                    <h3 class="plan-name">VPS20</h3>
+                    <div class="plan-price-container">
+                        <span class="old-price">₹2,599</span>
+                        <span class="plan-price">₹2,199</span>
+                    </div>
+                    <div class="plan-period">per month</div>
+                </div>
+                <div class="plan-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">CPU</span>
+                        <span class="spec-value">4 vCPU AMD EPYC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">16 GB DDR5 ECC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">50 GB NVMe SSD</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Bandwidth</span>
+                        <span class="spec-value">4 TB @ 1 Gbps</span>
+                    </div>
+                </div>
+                <div class="plan-actions">
+                    <button class="plan-button" onclick="addToCart('AMD EPYC VPS20', 2199)">Add to Cart</button>
+                    <button class="btn-details" onclick="showPlanDetails('amd-epyc', 20)">View Details</button>
+                </div>
+            </div>
+            
+            <!-- VPS21 -->
+            <div class="plan-card">
+                <div class="plan-image" style="background: linear-gradient(135deg, #7e22ce, #c084fc), url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80'); background-blend-mode: overlay; background-size: cover;"></div>
+                <div class="plan-header">
+                    <h3 class="plan-name">VPS21</h3>
+                    <div class="plan-price-container">
+                        <span class="old-price">₹2,999</span>
+                        <span class="plan-price">₹2,899</span>
+                    </div>
+                    <div class="plan-period">per month</div>
+                </div>
+                <div class="plan-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">CPU</span>
+                        <span class="spec-value">6 vCPU AMD EPYC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">16 GB DDR5 ECC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">100 GB NVMe SSD</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Bandwidth</span>
+                        <span class="spec-value">8 TB @ 1 Gbps</span>
+                    </div>
+                </div>
+                <div class="plan-actions">
+                    <button class="plan-button" onclick="addToCart('AMD EPYC VPS21', 2899)">Add to Cart</button>
+                    <button class="btn-details" onclick="showPlanDetails('amd-epyc', 21)">View Details</button>
+                </div>
+            </div>
+            
+            <!-- VPS22 -->
+            <div class="plan-card">
+                <div class="plan-image" style="background: linear-gradient(135deg, #7e22ce, #c084fc), url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80'); background-blend-mode: overlay; background-size: cover;"></div>
+                <div class="plan-header">
+                    <h3 class="plan-name">VPS22</h3>
+                    <div class="plan-price-container">
+                        <span class="old-price">₹3,959</span>
+                        <span class="plan-price">₹3,499</span>
+                    </div>
+                    <div class="plan-period">per month</div>
+                </div>
+                <div class="plan-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">CPU</span>
+                        <span class="spec-value">8 vCPU AMD EPYC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">24 GB DDR5 ECC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">110 GB NVMe SSD</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Bandwidth</span>
+                        <span class="spec-value">8 TB @ 1 Gbps</span>
+                    </div>
+                </div>
+                <div class="plan-actions">
+                    <button class="plan-button" onclick="addToCart('AMD EPYC VPS22', 3499)">Add to Cart</button>
+                    <button class="btn-details" onclick="showPlanDetails('amd-epyc', 22)">View Details</button>
+                </div>
+            </div>
+            
+            <!-- VPS23 -->
+            <div class="plan-card">
+                <div class="plan-image" style="background: linear-gradient(135deg, #7e22ce, #c084fc), url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80'); background-blend-mode: overlay; background-size: cover;"></div>
+                <div class="plan-badge">Premium</div>
+                <div class="plan-header">
+                    <h3 class="plan-name">VPS23</h3>
+                    <div class="plan-price-container">
+                        <span class="old-price">₹5,999</span>
+                        <span class="plan-price">₹4,999</span>
+                    </div>
+                    <div class="plan-period">per month</div>
+                </div>
+                <div class="plan-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">CPU</span>
+                        <span class="spec-value">10 vCPU AMD EPYC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">32 GB DDR5 ECC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">120 GB NVMe SSD</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Bandwidth</span>
+                        <span class="spec-value">8 TB @ 1 Gbps</span>
+                    </div>
+                </div>
+                <div class="plan-actions">
+                    <button class="plan-button" onclick="addToCart('AMD EPYC VPS23', 4999)">Add to Cart</button>
+                    <button class="btn-details" onclick="showPlanDetails('amd-epyc', 23)">View Details</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Page -->
+    <div class="cart-page" id="cart-page">
+        <div class="cart-page-header">
+            <h2 class="cart-page-title">Your Shopping Cart</h2>
+            <p class="cart-page-subtitle">Review your selected VPS plans and proceed to checkout</p>
+        </div>
+        
+        <div class="cart-items-container" id="cart-items-container">
+            <!-- Cart items will be dynamically added here -->
+            <div class="empty-cart" id="empty-cart-page">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>Your cart is empty</h3>
+                <p>Add some hosting plans to get started!</p>
+            </div>
+        </div>
+        
+        <div class="cart-summary" id="cart-summary-page" style="display: none;">
+            <div class="summary-row">
+                <span>Subtotal:</span>
+                <span id="subtotal-page">₹0</span>
+            </div>
+            <div class="summary-row summary-total">
+                <span>Total:</span>
+                <span id="total-page">₹0</span>
+            </div>
+            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+            <button class="continue-shopping" onclick="showMainPage()">Continue Shopping</button>
+        </div>
+    </div>
+
+    <!-- Plan Details Modal -->
+    <div class="modal" id="plan-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">Plan Details</h3>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Modal content will be dynamically added here -->
+            </div>
+            <div class="modal-footer">
+                <div class="modal-price" id="modal-price">₹0</div>
+                <div class="modal-actions">
+                    <button class="btn-details" onclick="closeModal()">Close</button>
+                    <button class="plan-button" id="modal-add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-text">Item added to cart!</span>
+    </div>
+
+    <script>
+        // Cart data
+        let cart = [];
+        let currentView = 'main';
+        let currentPlanDetails = null;
+
+        // Plan details data
+        const planDetails = {
+            'ryzen9': {
+                1: {
+                    name: 'Ryzen 9 VPS Plan 1',
+                    price: 699,
+                    image: 'linear-gradient(135deg, #1e3a8a, #8b5cf6), url("https://images.unsplash.com/photo-1597852074816-d933c7d2b988?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"); background-blend-mode: overlay; background-size: cover;',
+                    specs: [
+                        'CPU: 2 vCores AMD Ryzen 9 5900X @ 4.7GHz Turbo',
+                        'RAM: 4 GB DDR4 ECC 3200 MHz',
+                        'Disk: 40 GB Gen 4 NVMe (Soft RAID 2)',
+                        'Bandwidth: 4 TB @ 1 Gbps',
+                        'IPv4: Included',
+                        'Anti-DDoS: OVH VAC Shield',
+                        'OS: Any Linux',
+                        'Uptime: 99.9 % SLA',
+                        'Support: 9 AM – 5 PM'
+                    ],
+                    features: [
+                        'OVH VAC Shield Protection',
+                        'Full Root Access',
+                        '99.9% Uptime SLA',
+                        'Linux OS',
+                        'Ultra-Low Latency Network',
+                        'Powered by AMD Ryzen 9 5900X'
+                    ]
+                },
+                2: {
+                    name: 'Ryzen 9 VPS Plan 2',
+                    price: 1099,
+                    image: 'linear-gradient(135deg, #1e3a8a, #8b5cf6), url("https://images.unsplash.com/photo-1597852074816-d933c7d2b988?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"); background-blend-mode: overlay; background-size: cover;',
+                    specs: [
+                        'CPU: 4 vCores AMD Ryzen 9 5900X @ 4.7GHz Turbo',
+                        'RAM: 8 GB DDR4 ECC 3200 MHz',
+                        'Disk: 60 GB Gen 4 NVMe (Soft RAID 2)',
+                        'Bandwidth: 8 TB @ 1 Gbps',
+                        'IPv4: Included',
+                        'Anti-DDoS: OVH VAC Shield',
+                        'OS: Linux / Windows',
+                        'Uptime: 99.9 % SLA',
+                        'Support: 9 AM – 5 PM'
+                    ],
+                    features: [
+                        'OVH VAC Shield Protection',
+                        'Full Root Access',
+                        '99.9% Uptime SLA',
+                        'Linux/Windows OS',
+                        'Ultra-Low Latency Network',
+                        'Powered by AMD Ryzen 9 5900X'
+                    ]
+                },
+                3: {
+                    name: 'Ryzen 9 VPS Plan 3',
+                    price: 1699,
+                    image: 'linear-gradient(135deg, #1e3a8a, #8b5cf6), url("https://images.unsplash.com/photo-1597852074816-d933c7d2b988?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"); background-blend-mode: overlay; background-size: cover;',
+                    specs: [
+                        'CPU: 4 vCores AMD Ryzen 9 5900X @ 4.7GHz Turbo',
+                        'RAM: 16 GB DDR4 ECC 3200 MHz',
+                        'Disk: 50 GB Gen 4 NVMe (Soft RAID 2)',
+                        'Bandwidth: 8 TB @ 1 Gbps',
+                        'IPv4: Included',
+                        'Anti-DDoS: OVH VAC Shield',
+                        'OS: Linux / Windows',
+                        'Uptime: 99.9 % SLA',
+                        'Support: 9 AM – 5 PM'
+                    ],
+                    features: [
+                        'OVH VAC Shield Protection',
+                        'Full Root Access',
+                        '99.9% Uptime SLA',
+                        'Linux/Windows OS',
+                        'Ultra-Low Latency Network',
+                        'Powered by AMD Ryzen 9 5900X'
+                    ]
+                },
+                4: {
+                    name: 'Ryzen 9 VPS Plan 4',
+                    price: 1999,
+                    image: 'linear-gradient(135deg, #1e3a8a, #8b5cf6), url("https://images.unsplash.com/photo-1597852074816-d933c7d2b988?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"); background-blend-mode: overlay; background-size: cover;',
+                    specs: [
+                        'CPU: 6 vCores AMD Ryzen 9 5900X @ 4.7GHz Turbo',
+                        'RAM: 16 GB DDR4 ECC 3200 MHz',
+                        'Disk: 80 GB Gen 4 NVMe (Soft RAID 2)',
+                        'Bandwidth: 3 TB @ 1 Gbps',
+                        'IPv4: Included',
+                        'Anti-DDoS: OVH VAC Shield',
+                        'OS: Linux / Windows',
+                        'Uptime: 99.9 % SLA',
+                        'Support: 9 AM – 5 PM'
+                    ],
+                    features: [
+                        'OVH VAC Shield Protection',
+                        'Full Root Access',
+                        '99.9% Uptime SLA',
+                        'Linux/Windows OS',
+                        'Ultra-Low Latency Network',
+                        'Powered by AMD Ryzen 9 5900X'
+                    ]
+                },
+                5: {
+                    name: 'Ryzen 9 VPS Plan 5',
+                    price: 2499,
+                    image: 'linear-gradient(135deg, #1e3a8a, #8b5cf6), url("https://images.unsplash.com/photo-1597852074816-d933c7d2b988?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"); background-blend-mode: overlay; background-size: cover;',
+                    specs: [
+                        'CPU: 8 vCores AMD Ryzen 9 5900X @ 4.7GHz Turbo',
+                        'RAM: 24 GB DDR4 ECC 3200 MHz',
+                        'Disk: 100 GB Gen 4 NVMe (Soft RAID 2)',
+                        'Bandwidth: 8 TB @ 1 Gbps',
+                        'IPv4: Included',
+                        'Anti-DDoS: OVH VAC Shield',
+                        'OS: Linux / Windows',
+                        'Uptime: 99.9 % SLA',
+                        'Support: 9 AM – 5 PM'
+                    ],
+                    features: [
+                        'OVH VAC Shield Protection',
+                        'Full Root Access',
+                        '99.9% Uptime SLA',
+                        'Linux/Windows OS',
+                        'Ultra-Low Latency Network',
+                        'Powered by AMD Ryzen 9 5900X'
+                    ]
+                },
+                6: {
+                    name: 'Ryzen 9 VPS Plan 6',
+                    price: 3499,
+                    image: 'linear-gradient(135deg, #1e3a8a, #8b5cf6), url("https://images.unsplash.com/photo-1597852074816-d933c7d2b988?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"); background-blend-mode: overlay; background-size: cover;',
+                    specs: [
+                        'CPU: 10 vCores AMD Ryzen 9 5900X @ 4.7GHz Turbo',
+                        'RAM: 32 GB DDR4 ECC 3200 MHz',
+                        'Disk: 120 GB Gen 4 NVMe (Soft RAID 2)',
+                        'Bandwidth: 8 TB @ 1 Gbps',
+                        'IPv4: Included',
+                        'Anti-DDoS: OVH VAC Shield',
+                        'OS: Linux / Windows',
+                        'Uptime: 99.9 % SLA',
+                        'Support: 9 AM – 5 PM'
+                    ],
+                    features: [
+                        'OVH VAC Shield Protection',
+                        'Full Root Access',
+                        '99.9% Uptime SLA',
+                        'Linux/Windows OS',
+                        'Ultra-Low Latency Network',
+                        'Powered by AMD Ryzen 9 5900X'
+                    ]
+                }
+            },
+            'ryzen5': {
+                1: {
+                    name: 'Ryzen 5 VPS Plan 1',
+                    price: 399,
+                    image: 'linear-gradient(135deg, #0f766e, #14b8a6), url("https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1174&q=80"); background-blend-mode: overlay; background-size: cover;',
+                    specs: [
+                        'CPU: 2 vCores AMD Ryzen 5 5600X',
+                        'RAM: 4 GB DDR4 ECC 2400 MHz',
+                        'Disk: 20 GB NVMe (Soft RAID 2)',
+                        'IPv4: Included',
+                        'Uplink: 1 Gbps',
+                        'Anti-DDoS: OVH Game Protection',
+                        'Virtualization: KVM or LXC',
+                        'Location: Singapore',
+                        'Uptime: 99.9 % SLA',
+                        'Support: 9 AM – 5 PM'
+                    ],
+                    features: [
+                        'OVH Game Protection',
+                        'KVM/LXC Virtualization',
+                        '99.9% Uptime SLA',
+                        'Singapore Location',
+                        'Unmetered Bandwidth',
+                        'Powered by AMD Ryzen 5 5600X'
+                    ]
+                },
+                2: {
+                    name: 'Ryzen 5 VPS Plan 2',
+                    price: 499,
+                    image: 'linear-gradient(135deg, #0f766e, #14b8a6), url("https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1174&q=80"); background-blend-mode: overlay; background-size: cover;',
+                    specs: [
+                        'CPU: 3 vCores AMD Ryzen 5 5600X',
+                        'RAM: 4 GB DDR4 ECC 2400 MHz',
+                        'Disk: 40 GB NVMe',
+                        'IPv4: Included',
+                        'Uplink: 1 Gbps',
+                        'Anti-DDoS: OVH Game Protection',
+                        'Location: Singapore',
+                        'Uptime: 99.9 % SLA',
+                        'Support: 9 AM – 5 PM'
+                    ],
+                    features: [
+                        'OVH Game Protection',
+                        'KVM/LXC Virtualization',
+                        '99.9% Uptime SLA',
+                        'Singapore Location',
+                        'Unmetered Bandwidth',
+                        'Powered by AMD Ryzen 5 5600X'
+                    ]
+                },
+                3: {
+                    name: 'Ryzen 5 VPS Plan 3',
+                    price: 899,
+                    image: 'linear-gradient(135deg, #0f766e, #14b8a6), url("https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1174&q=80"); background-blend-mode: overlay; background-size: cover;',
+                    specs: [
+                        'CPU: 4 vCores AMD Ryzen 5 5600X',
+                        'RAM: 8 GB DDR4 ECC 2400 MHz',
+                        'Disk: 60 GB NVMe',
+                        'IPv4: Included',
+                        'Uplink: 1 Gbps',
+                        'Anti-DDoS: OVH Game Protection',
+                        'Location: Singapore',
+                        'Uptime: 99.9 % SLA',
+                        'Support: 9 AM – 5 PM'
+                    ],
+                    features: [
+                        'OVH Game Protection',
+                        'KVM/LXC Virtualization',
+                        '99.9% Uptime SLA',
+                        'Singapore Location',
+                        'Unmetered Bandwidth',
+                        'Powered by AMD Ryzen 5 5600X'
+                    ]
+                },
+                4: {
+                    name: 'Ryzen 5 VPS Plan 4',
+                    price: 1599,
+                    image: 'linear-gradient(135deg, #0f766e, #14b8a6), url("https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1174&q=80"); background-blend-mode: overlay; background-size: cover;',
+                    specs: [
+                        'CPU: 6 vCores AMD Ryzen 5 5600X',
+                        'RAM: 16 GB DDR4 ECC 2400 MHz',
+                        'Disk: 80 GB NVMe',
+                        'IPv4: Included',
+                        'Uplink: 1 Gbps',
+                        'Anti-DDoS: OVH Game Protection',
+                        'Location: Singapore',
+                        'Uptime: 99.9 % SLA',
+                        'Support: 9 AM – 5 PM'
+                    ],
+                    features: [
+                        'OVH Game Protection',
+                        'KVM/LXC Virtualization',
+                        '99.9% Uptime SLA',
+                        'Singapore Location',
+                        'Unmetered Bandwidth',
+                        'Powered by AMD Ryzen 5 5600X'
+                    ]
+                },
+                5: {
+                    name: 'Ryzen 5 VPS Plan 5',
+                    price: 1999,
+                    image: 'linear-gradient(135deg, #0f766e, #14b8a6), url("https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1174&q=80"); background-blend-mode: overlay; background-size: cover;',
+                    specs: [
+                        'CPU: 8 vCores AMD Ryzen 5 5600X',
+                        'RAM: 24 GB DDR4 ECC 2400 MHz',
+                        'Disk: 100 GB NVMe',
+                        'IPv4: Included',
+                        'Uplink: 1 Gbps',
+                        'Anti-DDoS: OVH Game Protection',
+                        'Location: Singapore',
+                        'Uptime: 99.9 % SLA',
+                        'Support: 9 AM – 5 PM'
+                    ],
+                    features: [
+                        'OVH Game Protection',
+                        'KVM/LXC Virtualization',
+                        '99.9% Uptime SLA',
+                        'Singapore Location',
+                        'Unmetered Bandwidth',
+                        'Powered by AMD Ryzen 5 5600X'
+                    ]
+                }
+            },
+            'amd-epyc': {
+                17: {
+                    name: 'AMD EPYC VPS17',
+                    price: 799,
+                    image: 'linear-gradient(135deg, #7e22ce, #c084fc), url("https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80"); background-blend-mode: overlay; background-size: cover;',
+                    specs: [
+                        'CPU: 2 vCPU AMD EPYC 4244P',
+                        'RAM: 4 GB DDR5 ECC On-Die 5200MHz',
+                        'Disk: 20 GB NVMe SSD',
+                        'IPv4: 1 Dedicated IP',
+                        'Uplink: 1 Gbps',
+                        'Bandwidth: 4 TB',
+                        'Anti-DDoS: OVH Real-Time Mitigation',
+                        'Location: India',
+                        'Uptime: 99.9 % SLA'
+                    ],
+                    features: [
+                        'DDoS Protection Included',
+                        'OVH Real-Time Mitigation',
+                        'Full Root Access',
+                        'Linux/Windows OS',
+                        'Blazing 1 Gbit/s Uplink',
+                        'OVH-VAC Shield Protection',
+                        'Powered by AMD EPYC 4244P 5.1GHz'
+                    ]
+                },
+                18: {
+                    name: 'AMD EPYC VPS18',
+                    price: 1199,
+                    image: 'linear-gradient(135deg, #7e22ce, #c084fc), url("https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80"); background-blend-mode: overlay; background-size: cover;',
+                    specs: [
+                        'CPU: 4 vCPU AMD EPYC 4244P',
+                        'RAM: 4 GB DDR5 ECC On-Die 5200MHz',
+                        'Disk: 40 GB NVMe SSD',
+                        'IPv4: 1 Dedicated IP',
+                        'Uplink: 1 Gbps',
+                        'Bandwidth: 6 TB',
+                        'Anti-DDoS: OVH Real-Time Mitigation',
+                        'Location: India',
+                        'Uptime: 99.9 % SLA'
+                    ],
+                    features: [
+                        'DDoS Protection Included',
+                        'OVH Real-Time Mitigation',
+                        'Full Root Access',
+                        'Linux/Windows OS',
+                        'Blazing 1 Gbit/s Uplink',
+                        'OVH-VAC Shield Protection',
+                        'Powered by AMD EPYC 4244P 5.1GHz'
+                    ]
+                },
+                19: {
+                    name: 'AMD EPYC VPS19',
+                    price: 1699,
+                    image: 'linear-gradient(135deg, #7e22ce, #c084fc), url("https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80"); background-blend-mode: overlay; background-size: cover;',
+                    specs: [
+                        'CPU: 4 vCPU AMD EPYC 4244P',
+                        'RAM: 8 GB DDR5 ECC On-Die 5200MHz',
+                        'Disk: 60 GB NVMe SSD',
+                        'IPv4: 1 Dedicated IP',
+                        'Uplink: 1 Gbps',
+                        'Bandwidth: 6 TB',
+                        'Anti-DDoS: OVH Real-Time Mitigation',
+                        'Location: India',
+                        'Uptime: 99.9 % SLA'
+                    ],
+                    features: [
+                        'DDoS Protection Included',
+                        'OVH Real-Time Mitigation',
+                        'Full Root Access',
+                        'Linux/Windows OS',
+                        'Blazing 1 Gbit/s Uplink',
+                        'OVH-VAC Shield Protection',
+                        'Powered by AMD EPYC 4244P 5.1GHz'
+                    ]
+                },
+                20: {
+                    name: 'AMD EPYC VPS20',
+                    price: 2199,
+                    image: 'linear-gradient(135deg, #7e22ce, #c084fc), url("https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80"); background-blend-mode: overlay; background-size: cover;',
+                    specs: [
+                        'CPU: 4 vCPU AMD EPYC 4244P',
+                        'RAM: 16 GB DDR5 ECC On-Die 5200MHz',
+                        'Disk: 50 GB NVMe SSD',
+                        'IPv4: 1 Dedicated IP',
+                        'Uplink: 1 Gbps',
+                        'Bandwidth: 4 TB',
+                        'Anti-DDoS: OVH Real-Time Mitigation',
+                        'Location: India',
+                        'Uptime: 99.9 % SLA'
+                    ],
+                    features: [
+                        'DDoS Protection Included',
+                        'OVH Real-Time Mitigation',
+                        'Full Root Access',
+                        'Linux/Windows OS',
+                        'Blazing 1 Gbit/s Uplink',
+                        'OVH-VAC Shield Protection',
+                        'Powered by AMD EPYC 4244P 5.1GHz'
+                    ]
+                },
+                21: {
+                    name: 'AMD EPYC VPS21',
+                    price: 2899,
+                    image: 'linear-gradient(135deg, #7e22ce, #c084fc), url("https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80"); background-blend-mode: overlay; background-size: cover;',
+                    specs: [
+                        'CPU: 6 vCPU AMD EPYC 4244P',
+                        'RAM: 16 GB DDR5 ECC On-Die 5200MHz',
+                        'Disk: 100 GB NVMe SSD',
+                        'IPv4: 1 Dedicated IP',
+                        'Uplink: 1 Gbps',
+                        'Bandwidth: 8 TB',
+                        'Anti-DDoS: OVH Real-Time Mitigation',
+                        'Location: India',
+                        'Uptime: 99.9 % SLA'
+                    ],
+                    features: [
+                        'DDoS Protection Included',
+                        'OVH Real-Time Mitigation',
+                        'Full Root Access',
+                        'Linux/Windows OS',
+                        'Blazing 1 Gbit/s Uplink',
+                        'OVH-VAC Shield Protection',
+                        'Powered by AMD EPYC 4244P 5.1GHz'
+                    ]
+                },
+                22: {
+                    name: 'AMD EPYC VPS22',
+                    price: 3499,
+                    image: 'linear-gradient(135deg, #7e22ce, #c084fc), url("https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80"); background-blend-mode: overlay; background-size: cover;',
+                    specs: [
+                        'CPU: 8 vCPU AMD EPYC 4244P',
+                        'RAM: 24 GB DDR5 ECC On-Die 5200MHz',
+                        'Disk: 110 GB NVMe SSD',
+                        'IPv4: 1 Dedicated IP',
+                        'Uplink: 1 Gbps',
+                        'Bandwidth: 8 TB',
+                        'Anti-DDoS: OVH Real-Time Mitigation',
+                        'Location: India',
+                        'Uptime: 99.9 % SLA'
+                    ],
+                    features: [
+                        'DDoS Protection Included',
+                        'OVH Real-Time Mitigation',
+                        'Full Root Access',
+                        'Linux/Windows OS',
+                        'Blazing 1 Gbit/s Uplink',
+                        'OVH-VAC Shield Protection',
+                        'Powered by AMD EPYC 4244P 5.1GHz'
+                    ]
+                },
+                23: {
+                    name: 'AMD EPYC VPS23',
+                    price: 4999,
+                    image: 'linear-gradient(135deg, #7e22ce, #c084fc), url("https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80"); background-blend-mode: overlay; background-size: cover;',
+                    specs: [
+                        'CPU: 10 vCPU AMD EPYC 4244P',
+                        'RAM: 32 GB DDR5 ECC On-Die 5200MHz',
+                        'Disk: 120 GB NVMe SSD',
+                        'IPv4: 1 Dedicated IP',
+                        'Uplink: 1 Gbps',
+                        'Bandwidth: 8 TB',
+                        'Anti-DDoS: OVH Real-Time Mitigation',
+                        'Location: India',
+                        'Uptime: 99.9 % SLA'
+                    ],
+                    features: [
+                        'DDoS Protection Included',
+                        'OVH Real-Time Mitigation',
+                        'Full Root Access',
+                        'Linux/Windows OS',
+                        'Blazing 1 Gbit/s Uplink',
+                        'OVH-VAC Shield Protection',
+                        'Powered by AMD EPYC 4244P 5.1GHz'
+                    ]
+                }
+            }
+        };
+
+        // Redirect to Discord
+        function redirectToDiscord() {
+            window.open('https://discord.gg/ybwsgmBrzr', '_blank');
+        }
+
+        // Show VPS navigation
+        function showVPSNav() {
+            document.getElementById('main-nav').style.display = 'none';
+            document.getElementById('vps-nav').classList.add('active');
+            document.getElementById('back-button').classList.add('active');
+            document.querySelectorAll('.plans-container').forEach(container => {
+                container.classList.remove('active');
+            });
+            document.getElementById('cart-page').classList.remove('active');
+            currentView = 'vps';
+        }
+
+        // Show plans for a specific VPS type
+        function showPlans(type) {
+            document.getElementById('vps-nav').classList.remove('active');
+            document.querySelectorAll('.plans-container').forEach(container => {
+                container.classList.remove('active');
+            });
+            document.getElementById(`${type}-plans`).classList.add('active');
+            document.getElementById('cart-page').classList.remove('active');
+            currentView = 'plans';
+        }
+
+        // Show cart page
+        function showCartPage() {
+            document.getElementById('main-nav').style.display = 'none';
+            document.getElementById('vps-nav').classList.remove('active');
+            document.querySelectorAll('.plans-container').forEach(container => {
+                container.classList.remove('active');
+            });
+            document.getElementById('back-button').classList.remove('active');
+            document.getElementById('cart-page').classList.add('active');
+            updateCartPage();
+            currentView = 'cart';
+        }
+
+        // Show main page
+        function showMainPage() {
+            document.getElementById('main-nav').style.display = 'flex';
+            document.getElementById('vps-nav').classList.remove('active');
+            document.querySelectorAll('.plans-container').forEach(container => {
+                container.classList.remove('active');
+            });
+            document.getElementById('back-button').classList.remove('active');
+            document.getElementById('cart-page').classList.remove('active');
+            currentView = 'main';
+        }
+
+        // Go back to previous view
+        function goBack() {
+            if (currentView === 'plans') {
+                document.querySelectorAll('.plans-container').forEach(container => {
+                    container.classList.remove('active');
+                });
+                document.getElementById('vps-nav').classList.add('active');
+                currentView = 'vps';
+            } else if (currentView === 'vps') {
+                document.getElementById('vps-nav').classList.remove('active');
+                document.getElementById('main-nav').style.display = 'flex';
+                document.getElementById('back-button').classList.remove('active');
+                currentView = 'main';
+            }
+        }
+
+        // Add to cart function
+        function addToCart(name, price) {
+            // Check if item already exists in cart
+            const existingItem = cart.find(item => item.name === name);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    name: name,
+                    price: price,
+                    quantity: 1
+                });
+            }
+            
+            // Update cart display
+            updateCartCount();
+            
+            // Show notification
+            showNotification(`${name} added to cart!`);
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = cartCount;
+        }
+
+        // Update cart page
+        function updateCartPage() {
+            const cartItemsContainer = document.getElementById('cart-items-container');
+            const emptyCartPage = document.getElementById('empty-cart-page');
+            const cartSummaryPage = document.getElementById('cart-summary-page');
+            
+            // Clear current items
+            cartItemsContainer.innerHTML = '';
+            
+            if (cart.length === 0) {
+                // Show empty cart message
+                emptyCartPage.style.display = 'block';
+                cartSummaryPage.style.display = 'none';
+            } else {
+                // Hide empty cart message
+                emptyCartPage.style.display = 'none';
+                
+                // Add each cart item
+                cart.forEach((item, index) => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'cart-item';
+                    cartItem.innerHTML = `
+                        <div class="item-info">
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-price">₹${item.price}</div>
+                        </div>
+                        <div class="item-actions">
+                            <div class="quantity-controls">
+                                <button class="quantity-btn" onclick="updateCartQuantity(${index}, -1)">-</button>
+                                <span class="quantity">${item.quantity}</span>
+                                <button class="quantity-btn" onclick="updateCartQuantity(${index}, 1)">+</button>
+                            </div>
+                            <button class="remove-btn" onclick="removeFromCartPage(${index})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(cartItem);
+                });
+                
+                // Update summary
+                updateCartSummaryPage();
+                cartSummaryPage.style.display = 'block';
+            }
+        }
+
+        // Update cart summary on cart page
+        function updateCartSummaryPage() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            document.getElementById('subtotal-page').textContent = `₹${subtotal}`;
+            document.getElementById('total-page').textContent = `₹${subtotal}`;
+        }
+
+        // Update item quantity on cart page
+        function updateCartQuantity(index, change) {
+            cart[index].quantity += change;
+            
+            // Remove item if quantity is 0
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            
+            updateCartPage();
+            updateCartCount();
+        }
+
+        // Remove item from cart page
+        function removeFromCartPage(index) {
+            cart.splice(index, 1);
+            updateCartPage();
+            updateCartCount();
+        }
+
+        // Show plan details modal
+        function showPlanDetails(type, planNumber) {
+            const plan = planDetails[type][planNumber];
+            if (!plan) return;
+            
+            currentPlanDetails = plan;
+            
+            // Set modal title
+            document.getElementById('modal-title').textContent = plan.name;
+            
+            // Set modal price
+            document.getElementById('modal-price').textContent = `₹${plan.price}`;
+            
+            // Set modal body content
+            let modalBody = `
+                <div class="modal-image" style="background: ${plan.image};"></div>
+                <div class="modal-specs">
+                    <h3>Specifications</h3>
+                    <ul>
+            `;
+            
+            plan.specs.forEach(spec => {
+                modalBody += `<li><i class="fas fa-check"></i> ${spec}</li>`;
+            });
+            
+            modalBody += `
+                    </ul>
+                </div>
+                <div class="modal-features">
+                    <h3>Features</h3>
+                    <ul>
+            `;
+            
+            plan.features.forEach(feature => {
+                modalBody += `<li><i class="fas fa-star"></i> ${feature}</li>`;
+            });
+            
+            modalBody += `
+                    </ul>
+                </div>
+            `;
+            
+            document.getElementById('modal-body').innerHTML = modalBody;
+            
+            // Set add to cart button
+            document.getElementById('modal-add-to-cart').onclick = function() {
+                addToCart(plan.name, plan.price);
+                closeModal();
+            };
+            
+            // Show modal
+            document.getElementById('plan-modal').classList.add('active');
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('plan-modal').classList.remove('active');
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            document.getElementById('notification-text').textContent = message;
+            
+            notification.classList.add('active');
+            
+            setTimeout(() => {
+                notification.classList.remove('active');
+            }, 3000);
+        }
+
+        // Checkout function
+        function checkout() {
+            if (cart.length === 0) {
+                showNotification('Your cart is empty!');
+                return;
+            }
+            
+            // In a real application, this would redirect to a checkout page
+            // For this demo, we'll just show a success message
+            showNotification('Checkout successful! Thank you for your purchase.');
+            
+            // Clear cart
+            cart = [];
+            updateCartPage();
+            updateCartCount();
+        }
+
+        // Go to main page
+        function goToMainPage() {
+            window.location.href = 'main.html';
+        }
+
+        // Initialize cart count
+        updateCartCount();
+    </script>
+</body>
+</html>

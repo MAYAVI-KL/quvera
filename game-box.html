@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quvere Cloud - Gaming Hosting Solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --primary-light: #a78bfa;
+            --secondary: #06b6d4;
+            --accent: #ff6b6b;
+            --accent-glow: rgba(255, 107, 107, 0.7);
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --card-bg: rgba(15, 23, 42, 0.7);
+            --card-border: rgba(99, 102, 241, 0.2);
+            --neon-glow: 0 0 10px var(--primary), 0 0 20px var(--primary), 0 0 40px var(--primary);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, #1e1b4b 100%);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Back Button Styles */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--primary);
+            color: var(--light);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.6);
+        }
+
+        .back-button:active {
+            transform: translateY(0);
+        }
+
+        .back-button i {
+            font-size: 1.1rem;
+        }
+
+        /* Trusted by Gaming Communities Section */
+        .trusted-gaming {
+            padding: 80px 0;
+            background: rgba(2, 6, 23, 0.5);
+            text-align: center;
+        }
+
+        .trusted-title {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: var(--light);
+            text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+            position: relative;
+            display: inline-block;
+        }
+
+        .trusted-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .game-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+            transition: all 0.4s ease;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(139, 92, 246, 0.3) 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: 1;
+        }
+
+        .game-card:hover::before {
+            opacity: 1;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(139, 92, 246, 0.4);
+            border-color: var(--primary);
+        }
+
+        .game-image {
+            height: 200px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70%;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.9), transparent);
+        }
+
+        .game-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.8rem;
+            color: var(--primary);
+            background: rgba(15, 23, 42, 0.7);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px var(--primary);
+            z-index: 2;
+        }
+
+        .game-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+        }
+
+        .game-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--light);
+            text-shadow: 0 0 5px rgba(139, 92, 246, 0.5);
+        }
+
+        .game-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: auto;
+        }
+
+        .game-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        /* Background images for each game card */
+        .game-card:nth-child(1) .game-image {
+            background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+        }
+
+        .game-card:nth-child(2) .game-image {
+            background-image: url('https://images.unsplash.com/photo-1593305841991-05c297ba4575?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1157&q=80');
+        }
+
+        .game-card:nth-child(3) .game-image {
+            background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+        }
+
+        .game-card:nth-child(4) .game-image {
+            background-image: url('https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80');
+        }
+
+        .game-card:nth-child(5) .game-image {
+            background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+        }
+
+        .game-card:nth-child(6) .game-image {
+            background-image: url('https://images.unsplash.com/photo-1593305841991-05c297ba4575?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1157&q=80');
+        }
+
+        /* Lighting Effects */
+        .light-beam {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(139, 92, 246, 0.1) 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .game-card:hover .light-beam {
+            opacity: 1;
+        }
+
+        .corner-highlight {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: var(--primary);
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: 1;
+        }
+
+        .corner-highlight:nth-child(1) {
+            top: 0;
+            left: 0;
+            border-radius: 0 0 100% 0;
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .corner-highlight:nth-child(2) {
+            top: 0;
+            right: 0;
+            border-radius: 0 0 0 100%;
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .corner-highlight:nth-child(3) {
+            bottom: 0;
+            left: 0;
+            border-radius: 0 100% 0 0;
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .corner-highlight:nth-child(4) {
+            bottom: 0;
+            right: 0;
+            border-radius: 100% 0 0 0;
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .game-card:hover .corner-highlight {
+            opacity: 0.7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .games-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .game-card {
+                height: 320px;
+            }
+            
+            .trusted-title {
+                font-size: 2rem;
+            }
+            
+            .back-button {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .game-card {
+                height: 300px;
+            }
+            
+            .trusted-title {
+                font-size: 1.8rem;
+            }
+            
+            .back-button {
+                padding: 8px 14px;
+                font-size: 0.85rem;
+                top: 15px;
+                left: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="main.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back
+    </a>
+
+    <!-- Trusted by Gaming Communities -->
+    <section class="trusted-gaming">
+        <div class="container">
+            <h2 class="trusted-title">Trusted by Gaming Communities Worldwide</h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <div class="game-image">
+                        <i class="fas fa-dragon game-icon"></i>
+                        <div class="light-beam"></div>
+                        <div class="corner-highlight"></div>
+                        <div class="corner-highlight"></div>
+                        <div class="corner-highlight"></div>
+                        <div class="corner-highlight"></div>
+                    </div>
+                    <div class="game-content">
+                        <div>
+                            <h3 class="game-name">Minecraft</h3>
+                            <p class="game-description">The ultimate sandbox experience with limitless creativity and exploration in blocky worlds.</p>
+                        </div>
+                        <div class="game-stats">
+                            <div class="game-stat">
+                                <span class="stat-value">126M</span>
+                                <span class="stat-label">Monthly Players</span>
+                            </div>
+                            <div class="game-stat">
+                                <span class="stat-value">99.2%</span>
+                                <span class="stat-label">Uptime</span>
+                            </div>
+                            <div class="game-stat">
+                                <span class="stat-value">15ms</span>
+                                <span class="stat-label">Avg. Latency</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <div class="game-image">
+                        <i class="fas fa-crosshairs game-icon"></i>
+                        <div class="light-beam"></div>
+                        <div class="corner-highlight"></div>
+                        <div class="corner-highlight"></div>
+                        <div class="corner-highlight"></div>
+                        <div class="corner-highlight"></div>
+                    </div>
+                    <div class="game-content">
+                        <div>
+                            <h3 class="game-name">Counter-Strike</h3>
+                            <p class="game-description">The definitive tactical FPS experience with competitive gameplay and precise mechanics.</p>
+                        </div>
+                        <div class="game-stats">
+                            <div class="game-stat">
+                                <span class="stat-value">24M</span>
+                                <span class="stat-label">Monthly Players</span>
+                            </div>
+                            <div class="game-stat">
+                                <span class="stat-value">99.5%</span>
+                                <span class="stat-label">Uptime</span>
+                            </div>
+                            <div class="game-stat">
+                                <span class="stat-value">8ms</span>
+                                <span class="stat-label">Avg. Latency</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <div class="game-image">
+                        <i class="fas fa-fort-awesome game-icon"></i>
+                        <div class="light-beam"></div>
+                        <div class="corner-highlight"></div>
+                        <div class="corner-highlight"></div>
+                        <div class="corner-highlight"></div>
+                        <div class="corner-highlight"></div>
+                    </div>
+                    <div class="game-content">
+                        <div>
+                            <h3 class="game-name">Fortnite</h3>
+                            <p class="game-description">Battle royale phenomenon with building mechanics and constant content updates.</p>
+                        </div>
+                        <div class="game-stats">
+                            <div class="game-stat">
+                                <span class="stat-value">80M</span>
+                                <span class="stat-label">Monthly Players</span>
+                            </div>
+                            <div class="game-stat">
+                                <span class="stat-value">99.3%</span>
+                                <span class="stat-label">Uptime</span>
+                            </div>
+                            <div class="game-stat">
+                                <span class="stat-value">12ms</span>
+                                <span class="stat-label">Avg. Latency</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <div class="game-image">
+                        <i class="fas fa-ghost game-icon"></i>
+                        <div class="light-beam"></div>
+                        <div class="corner-highlight"></div>
+                        <div class="corner-highlight"></div>
+                        <div class="corner-highlight"></div>
+                        <div class="corner-highlight"></div>
+                    </div>
+                    <div class="game-content">
+                        <div>
+                            <h3 class="game-name">Among Us</h3>
+                            <p class="game-description">Social deduction game of teamwork and betrayal set in a space-themed setting.</p>
+                        </div>
+                        <div class="game-stats">
+                            <div class="game-stat">
+                                <span class="stat-value">15M</span>
+                                <span class="stat-label">Monthly Players</span>
+                            </div>
+                            <div class="game-stat">
+                                <span class="stat-value">99.1%</span>
+                                <span class="stat-label">Uptime</span>
+                            </div>
+                            <div class="game-stat">
+                                <span class="stat-value">10ms</span>
+                                <span class="stat-label">Avg. Latency</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Additional Game Cards -->
+                <div class="game-card">
+                    <div class="game-image">
+                        <i class="fas fa-helmet-battle game-icon"></i>
+                        <div class="light-beam"></div>
+                        <div class="corner-highlight"></div>
+                        <div class="corner-highlight"></div>
+                        <div class="corner-highlight"></div>
+                        <div class="corner-highlight"></div>
+                    </div>
+                    <div class="game-content">
+                        <div>
+                            <h3 class="game-name">Valorant</h3>
+                            <p class="game-description">Tactical shooter with unique agent abilities and precise gunplay mechanics.</p>
+                        </div>
+                        <div class="game-stats">
+                            <div class="game-stat">
+                                <span class="stat-value">18M</span>
+                                <span class="stat-label">Monthly Players</span>
+                            </div>
+                            <div class="game-stat">
+                                <span class="stat-value">99.4%</span>
+                                <span class="stat-label">Uptime</span>
+                            </div>
+                            <div class="game-stat">
+                                <span class="stat-value">9ms</span>
+                                <span class="stat-label">Avg. Latency</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <div class="game-image">
+                        <i class="fas fa-dice-d20 game-icon"></i>
+                        <div class="light-beam"></div>
+                        <div class="corner-highlight"></div>
+                        <div class="corner-highlight"></div>
+                        <div class="corner-highlight"></div>
+                        <div class="corner-highlight"></div>
+                    </div>
+                    <div class="game-content">
+                        <div>
+                            <h3 class="game-name">World of Warcraft</h3>
+                            <p class="game-description">Epic MMORPG with rich lore, expansive worlds, and endless adventures.</p>
+                        </div>
+                        <div class="game-stats">
+                            <div class="game-stat">
+                                <span class="stat-value">7.2M</span>
+                                <span class="stat-label">Monthly Players</span>
+                            </div>
+                            <div class="game-stat">
+                                <span class="stat-value">99.6%</span>
+                                <span class="stat-label">Uptime</span>
+                            </div>
+                            <div class="game-stat">
+                                <span class="stat-value">11ms</span>
+                                <span class="stat-label">Avg. Latency</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Add subtle animation to the game cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const gameCards = document.querySelectorAll('.game-card');
+            
+            gameCards.forEach((card, index) => {
+                // Add staggered animation delay
+                card.style.animationDelay = `${index * 0.1}s`;
+                
+                // Add mouse move effect for dynamic lighting
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const angle = Math.atan2(y - centerY, x - centerX) * (180 / Math.PI);
+                    
+                    const lightBeam = card.querySelector('.light-beam');
+                    lightBeam.style.background = `linear-gradient(${angle}deg, transparent 0%, rgba(139, 92, 246, 0.1) 50%, transparent 100%)`;
+                });
+            });
+        });
+    </script>
+</body>
+</html>

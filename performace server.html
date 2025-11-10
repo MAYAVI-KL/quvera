@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Infrastructure with Dynamic Themes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: background 1.5s ease;
+            overflow-x: hidden;
+        }
+
+        /* Back Button Styles */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: rgba(0, 204, 255, 0.3);
+        }
+
+        .back-button:active {
+            transform: translateY(0);
+        }
+
+        .back-button i {
+            font-size: 1.1rem;
+            color: #00ccff;
+        }
+
+        .theme-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .theme-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+            border-color: white;
+        }
+
+        .theme-btn.active {
+            border-color: white;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+
+        .theme-1 { background: linear-gradient(45deg, #0f0c29, #302b63, #24243e); }
+        .theme-2 { background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460); }
+        .theme-3 { background: linear-gradient(45deg, #2c003e, #512b58, #0078aa); }
+        .theme-4 { background: linear-gradient(45deg, #051e3e, #251e3e, #451e3e); }
+        .theme-5 { background: linear-gradient(45deg, #1d2671, #c33764, #2c3e50); }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: floatParticle 20s infinite linear;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .infrastructure {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .container {
+            width: 100%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff00cc, #00ccff);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #fff, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .global-map {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            margin: 60px 0;
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+        }
+
+        .map-background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1742&q=80') center/cover;
+            opacity: 0.2;
+            filter: brightness(0.5) contrast(1.2);
+        }
+
+        .connection-ring {
+            position: absolute;
+            border: 2px solid rgba(0, 204, 255, 0.3);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: ripple 6s infinite linear;
+        }
+
+        .ring-1 {
+            width: 200px;
+            height: 200px;
+            animation-delay: 0s;
+        }
+
+        .ring-2 {
+            width: 400px;
+            height: 400px;
+            animation-delay: 1s;
+        }
+
+        .ring-3 {
+            width: 600px;
+            height: 600px;
+            animation-delay: 2s;
+        }
+
+        .ring-4 {
+            width: 800px;
+            height: 800px;
+            animation-delay: 3s;
+        }
+
+        .ring-5 {
+            width: 1000px;
+            height: 1000px;
+            animation-delay: 4s;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        .server-node {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .server-node:hover {
+            transform: scale(1.2);
+        }
+
+        .server-node:hover .node-tooltip {
+            opacity: 1;
+            transform: translate(-50%, -10px);
+        }
+
+        .node-inner {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff00cc, #00ccff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 16px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: pulse-node 2s infinite;
+        }
+
+        @keyframes pulse-node {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .node-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .node-tooltip strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #00ccff;
+        }
+
+        .node-tooltip span {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .node-na {
+            top: 30%;
+            left: 20%;
+        }
+
+        .node-eu {
+            top: 35%;
+            left: 50%;
+        }
+
+        .node-asia {
+            top: 40%;
+            left: 80%;
+        }
+
+        .node-sa {
+            top: 70%;
+            left: 30%;
+        }
+
+        .node-africa {
+            top: 60%;
+            left: 50%;
+        }
+
+        .data-packet {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(45deg, #ff00cc, #00ccff);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: movePacket 4s infinite linear;
+            box-shadow: 0 0 10px #00ccff;
+        }
+
+        @keyframes movePacket {
+            0% {
+                transform: translate(-50%, -50%);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(
+                    calc(-50% + var(--distanceX, 0px)), 
+                    calc(-50% + var(--distanceY, 0px))
+                );
+                opacity: 0;
+            }
+        }
+
+        .infrastructure-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border-color: rgba(0, 204, 255, 0.3);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .stat-card:hover::before {
+            left: 100%;
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff00cc, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #fff, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Connection Lines */
+        .connection-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ccff, transparent);
+            transform-origin: left center;
+            z-index: 1;
+        }
+
+        /* Theme-specific animations */
+        .theme-stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        .nebula {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.3;
+            background: radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, rgba(255, 255, 255, 0) 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 100, 124, 0.3) 0%, rgba(255, 255, 255, 0) 50%),
+                        radial-gradient(circle at 40% 70%, rgba(120, 220, 255, 0.3) 0%, rgba(255, 255, 255, 0) 50%);
+            animation: nebulaFloat 20s infinite alternate ease-in-out;
+        }
+
+        @keyframes nebulaFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-50px, 30px) scale(1.1); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .global-map {
+                height: 400px;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .infrastructure-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .server-node {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .node-inner {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
+            
+            .theme-selector {
+                top: 10px;
+                right: 10px;
+            }
+            
+            .theme-btn {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .back-button {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .global-map {
+                height: 300px;
+            }
+            
+            .infrastructure-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .back-button {
+                padding: 8px 14px;
+                font-size: 0.85rem;
+                top: 15px;
+                left: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="main.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back
+    </a>
+
+    <!-- Theme Selector -->
+    <div class="theme-selector">
+        <div class="theme-btn theme-1 active" data-theme="1"></div>
+        <div class="theme-btn theme-2" data-theme="2"></div>
+        <div class="theme-btn theme-3" data-theme="3"></div>
+        <div class="theme-btn theme-4" data-theme="4"></div>
+        <div class="theme-btn theme-5" data-theme="5"></div>
+    </div>
+
+    <!-- Background Elements -->
+    <div class="floating-particles" id="floatingParticles"></div>
+    <div class="theme-stars" id="themeStars"></div>
+    <div class="nebula"></div>
+
+    <!-- Global Infrastructure -->
+    <section class="infrastructure" id="infrastructure">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Global Network</div>
+                <h2 class="section-title">Worldwide Infrastructure</h2>
+                <p class="section-subtitle">Our global network of high-performance servers ensures low latency and maximum uptime for gamers worldwide.</p>
+            </div>
+            
+            <div class="global-map">
+                <div class="map-background"></div>
+                
+                <!-- Connection Rings -->
+                <div class="connection-ring ring-1"></div>
+                <div class="connection-ring ring-2"></div>
+                <div class="connection-ring ring-3"></div>
+                <div class="connection-ring ring-4"></div>
+                <div class="connection-ring ring-5"></div>
+                
+                <!-- Server Nodes -->
+                <div class="server-node node-na">
+                    <div class="node-inner">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="node-tooltip">
+                        <strong>North America</strong>
+                        <span>12 Data Centers</span>
+                    </div>
+                </div>
+                
+                <div class="server-node node-eu">
+                    <div class="node-inner">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="node-tooltip">
+                        <strong>Europe</strong>
+                        <span>8 Data Centers</span>
+                    </div>
+                </div>
+                
+                <div class="server-node node-asia">
+                    <div class="node-inner">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="node-tooltip">
+                        <strong>Asia</strong>
+                        <span>6 Data Centers</span>
+                    </div>
+                </div>
+                
+                <div class="server-node node-sa">
+                    <div class="node-inner">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="node-tooltip">
+                        <strong>South America</strong>
+                        <span>4 Data Centers</span>
+                    </div>
+                </div>
+                
+                <div class="server-node node-africa">
+                    <div class="node-inner">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="node-tooltip">
+                        <strong>Africa</strong>
+                        <span>2 Data Centers</span>
+                    </div>
+                </div>
+                
+                <!-- Data Packets -->
+                <div class="data-packet" style="--distanceX: 200px; --distanceY: 100px;"></div>
+                <div class="data-packet" style="--distanceX: -150px; --distanceY: 80px;"></div>
+                <div class="data-packet" style="--distanceX: 120px; --distanceY: -90px;"></div>
+                <div class="data-packet" style="--distanceX: -180px; --distanceY: -120px;"></div>
+                <div class="data-packet" style="--distanceX: 250px; --distanceY: -50px;"></div>
+            </div>
+            
+            <div class="infrastructure-stats">
+                <div class="stat-card">
+                    <i class="fas fa-server stat-icon"></i>
+                    <div class="stat-value">32</div>
+                    <div class="stat-label">Global Data Centers</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-bolt stat-icon"></i>
+                    <div class="stat-value">5ms</div>
+                    <div class="stat-label">Average Latency</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-shield-alt stat-icon"></i>
+                    <div class="stat-value">99.9%</div>
+                    <div class="stat-label">Uptime SLA</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-network-wired stat-icon"></i>
+                    <div class="stat-value">100Gbps</div>
+                    <div class="stat-label">Network Capacity</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Theme switching functionality
+        const themeButtons = document.querySelectorAll('.theme-btn');
+        const body = document.body;
+        
+        // Theme definitions
+        const themes = {
+            1: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)',
+            2: 'linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)',
+            3: 'linear-gradient(135deg, #2c003e, #512b58, #0078aa)',
+            4: 'linear-gradient(135deg, #051e3e, #251e3e, #451e3e)',
+            5: 'linear-gradient(135deg, #1d2671, #c33764, #2c3e50)'
+        };
+        
+        themeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const themeId = this.getAttribute('data-theme');
+                
+                // Update active button
+                themeButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Change background
+                body.style.background = themes[themeId];
+                
+                // Add theme-specific elements
+                updateThemeElements(themeId);
+            });
+        });
+        
+        // Create floating particles
+        const particlesContainer = document.getElementById('floatingParticles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.width = `${Math.random() * 20 + 5}px`;
+            particle.style.height = particle.style.width;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.animationDelay = `${Math.random() * 20}s`;
+            particle.style.animationDuration = `${15 + Math.random() * 15}s`;
+            particlesContainer.appendChild(particle);
+        }
+        
+        // Create stars
+        const starsContainer = document.getElementById('themeStars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.width = `${Math.random() * 3}px`;
+            star.style.height = star.style.width;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.animationDelay = `${Math.random() * 3}s`;
+            starsContainer.appendChild(star);
+        }
+        
+        // Add connection lines between nodes
+        document.addEventListener('DOMContentLoaded', function() {
+            const nodes = document.querySelectorAll('.server-node');
+            const map = document.querySelector('.global-map');
+            
+            // Create connection lines between nodes
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const line = document.createElement('div');
+                    line.classList.add('connection-line');
+                    
+                    const node1 = nodes[i];
+                    const node2 = nodes[j];
+                    
+                    // Calculate position and rotation
+                    const x1 = node1.offsetLeft + node1.offsetWidth / 2;
+                    const y1 = node1.offsetTop + node1.offsetHeight / 2;
+                    const x2 = node2.offsetLeft + node2.offsetWidth / 2;
+                    const y2 = node2.offsetTop + node2.offsetHeight / 2;
+                    
+                    const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+                    const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+                    
+                    line.style.width = `${length}px`;
+                    line.style.left = `${x1}px`;
+                    line.style.top = `${y1}px`;
+                    line.style.transform = `rotate(${angle}deg)`;
+                    line.style.opacity = '0.3';
+                    
+                    map.appendChild(line);
+                }
+            }
+            
+            // Add more data packets dynamically
+            for (let i = 0; i < 5; i++) {
+                const packet = document.createElement('div');
+                packet.classList.add('data-packet');
+                
+                // Random direction and distance
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 150 + Math.random() * 200;
+                const distanceX = Math.cos(angle) * distance;
+                const distanceY = Math.sin(angle) * distance;
+                
+                packet.style.setProperty('--distanceX', `${distanceX}px`);
+                packet.style.setProperty('--distanceY', `${distanceY}px`);
+                packet.style.animationDelay = `${Math.random() * 4}s`;
+                
+                document.querySelector('.global-map').appendChild(packet);
+            }
+            
+            // Add interactive node effects
+            nodes.forEach(node => {
+                node.addEventListener('mouseenter', function() {
+                    // Create a pulse effect
+                    const pulse = document.createElement('div');
+                    pulse.style.position = 'absolute';
+                    pulse.style.width = '80px';
+                    pulse.style.height = '80px';
+                    pulse.style.borderRadius = '50%';
+                    pulse.style.border = '2px solid rgba(0, 204, 255, 0.5)';
+                    pulse.style.top = '50%';
+                    pulse.style.left = '50%';
+                    pulse.style.transform = 'translate(-50%, -50%)';
+                    pulse.style.animation = 'ripple 1.5s ease-out';
+                    
+                    this.appendChild(pulse);
+                    
+                    // Remove pulse element after animation
+                    setTimeout(() => {
+                        if (this.contains(pulse)) {
+                            this.removeChild(pulse);
+                        }
+                    }, 1500);
+                });
+            });
+        });
+        
+        // Update theme-specific elements
+        function updateThemeElements(themeId) {
+            // This function can be expanded to change other elements based on theme
+            console.log(`Theme changed to ${themeId}`);
+        }
+    </script>
+</body>
+</html>

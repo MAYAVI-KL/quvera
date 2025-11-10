@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quvera Cloud - Terms & Privacy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c63ff;
+            --primary-dark: #554fd8;
+            --secondary: #00d4ff;
+            --accent: #ff2a6d;
+            --success: #00ff88;
+            --dark-bg: #0a0a12;
+            --darker-bg: #050508;
+            --card-bg: rgba(20, 20, 35, 0.9);
+            --text: #e0e0e0;
+            --text-light: #a0a0b0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            cursor: none;
+        }
+
+        /* Back Button Styles */
+        .back-button {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: rgba(20, 20, 35, 0.9);
+            color: var(--secondary);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s ease;
+            z-index: 1000;
+            text-decoration: none;
+            border: 2px solid rgba(108, 99, 255, 0.5);
+            overflow: hidden;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .back-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
+            transition: 0.6s;
+        }
+
+        .back-button:hover {
+            background: rgba(30, 30, 50, 0.95);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(108, 99, 255, 0.5);
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+
+        .back-button:hover::before {
+            left: 100%;
+        }
+
+        .back-button:active {
+            transform: translateY(-2px);
+        }
+
+        .back-button i {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            text-shadow: 0 0 15px var(--secondary);
+            transition: all 0.4s ease;
+        }
+
+        .back-button:hover i {
+            text-shadow: 0 0 25px var(--secondary), 0 0 40px var(--primary);
+            transform: translateX(-3px);
+        }
+
+        .dynamic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+            background: linear-gradient(45deg, #0a0a12, #0f0f1a, #151525);
+        }
+
+        .bg-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(108, 99, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 42, 109, 0.1) 0%, transparent 50%);
+            animation: bgMove 20s ease-in-out infinite;
+        }
+
+        @keyframes bgMove {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+            }
+            33% {
+                transform: scale(1.1) rotate(3deg);
+            }
+            66% {
+                transform: scale(1.05) rotate(-3deg);
+            }
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            opacity: 0.1;
+            animation: floatElement 25s infinite linear;
+            filter: blur(10px);
+        }
+
+        .floating-element:nth-child(2n) {
+            background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
+            animation-duration: 30s;
+        }
+
+        .floating-element:nth-child(3n) {
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            animation-duration: 35s;
+        }
+
+        @keyframes floatElement {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-30vh) translateX(20vw) rotate(90deg);
+            }
+            50% {
+                transform: translateY(20vh) translateX(-20vw) rotate(180deg);
+            }
+            75% {
+                transform: translateY(-20vh) translateX(-30vw) rotate(270deg);
+            }
+            100% {
+                transform: translateY(0) translateX(0) rotate(360deg);
+            }
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, rgba(108, 99, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(rgba(108, 99, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            animation: gridMove 40s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translateX(0) translateY(0);
+            }
+            100% {
+                transform: translateX(-50px) translateY(-50px);
+            }
+        }
+
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s;
+        }
+
+        .cursor-follower {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--secondary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.15s ease-out;
+            mix-blend-mode: difference;
+        }
+
+        .lighting-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, transparent 10%, rgba(10, 10, 18, 0.95) 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .dynamic-lighting {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(108, 99, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2;
+            transition: transform 0.1s ease-out;
+            mix-blend-mode: screen;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            padding: 3rem 0;
+        }
+
+        .logo {
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            text-shadow: 0 0 30px rgba(108, 99, 255, 0.5);
+            letter-spacing: 3px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 40px rgba(108, 99, 255, 0.8);
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+            box-shadow: 0 0 20px var(--secondary);
+        }
+
+        .tagline {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        .last-updated {
+            background: rgba(10, 10, 18, 0.8);
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            display: inline-block;
+            font-size: 1rem;
+            color: var(--text-light);
+            border: 1px solid rgba(108, 99, 255, 0.5);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(108, 99, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .last-updated:hover {
+            box-shadow: 0 0 30px rgba(108, 99, 255, 0.5);
+            transform: translateY(-5px);
+        }
+
+        .policy-navigation {
+            display: flex;
+            justify-content: center;
+            margin: 3rem 0;
+            gap: 2rem;
+        }
+
+        .nav-btn {
+            padding: 1.5rem 3rem;
+            background: rgba(20, 20, 35, 0.8);
+            border: 2px solid var(--primary);
+            color: var(--text);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 4;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+
+        .nav-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 30px rgba(108, 99, 255, 0.7);
+            border-color: var(--secondary);
+        }
+
+        .nav-btn:hover:not(.active) {
+            border-color: var(--secondary);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .policy-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .policy-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(108, 99, 255, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .policy-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .policy-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 50px rgba(108, 99, 255, 0.4);
+            border-color: rgba(108, 99, 255, 0.6);
+        }
+
+        .policy-title {
+            font-size: 2.5rem;
+            margin-bottom: 2.5rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 2px solid rgba(108, 99, 255, 0.3);
+            padding-bottom: 1rem;
+        }
+
+        .policy-title i {
+            color: var(--secondary);
+            font-size: 2.8rem;
+        }
+
+        .policy-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            overflow-y: auto;
+            padding-right: 1rem;
+        }
+
+        .policy-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .policy-content::-webkit-scrollbar-track {
+            background: rgba(108, 99, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .policy-content::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        .policy-section {
+            background: rgba(15, 15, 26, 0.6);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(108, 99, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .policy-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .policy-section:hover {
+            background: rgba(25, 25, 40, 0.8);
+            transform: translateX(10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+        }
+
+        .section-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            font-weight: 700;
+            box-shadow: 0 0 15px rgba(108, 99, 255, 0.5);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text);
+            flex: 1;
+        }
+
+        .section-content {
+            color: var(--text-light);
+            line-height: 1.8;
+            padding-left: 3.5rem;
+        }
+
+        .section-content ul {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .section-content li {
+            margin-bottom: 0.8rem;
+            position: relative;
+        }
+
+        .section-content li::before {
+            content: '▸';
+            color: var(--secondary);
+            position: absolute;
+            left: -1.2rem;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: rgba(108, 99, 255, 0.2);
+            padding: 0.3rem 0.6rem;
+            border-radius: 5px;
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        .warning {
+            background: rgba(255, 42, 109, 0.2);
+            padding: 0.3rem 0.6rem;
+            border-radius: 5px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 5rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 1.2rem 2.5rem;
+            border-radius: 12px;
+            background: rgba(20, 20, 35, 0.8);
+            border: 1px solid rgba(108, 99, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 4;
+        }
+
+        .contact-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .contact-item:hover::before {
+            left: 100%;
+        }
+
+        .contact-item:hover {
+            color: var(--secondary);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+            border-color: var(--secondary);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 6rem;
+            padding: 3rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 4;
+        }
+
+        .accept-btn {
+            display: block;
+            margin: 3rem auto 0;
+            padding: 1.8rem 4rem;
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(108, 99, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            z-index: 4;
+        }
+
+        .accept-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .accept-btn:hover::before {
+            left: 100%;
+        }
+
+        .accept-btn:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(108, 99, 255, 0.6);
+            background: linear-gradient(45deg, var(--primary-dark), var(--primary));
+        }
+
+        .light-fx {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Responsive Design for Back Button */
+        @media (max-width: 768px) {
+            .back-button {
+                top: 20px;
+                left: 20px;
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .back-button {
+                top: 15px;
+                left: 15px;
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="main.html#" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Main
+    </a>
+
+    <div class="dynamic-bg">
+        <div class="bg-animation"></div>
+        <div class="floating-elements" id="floatingElements"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <div class="custom-cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursorFollower"></div>
+    <div class="lighting-overlay"></div>
+    <div class="dynamic-lighting" id="dynamicLighting"></div>
+    <div class="light-fx" id="lightFx"></div>
+
+    <div class="container">
+        <header>
+            <h1 class="logo">QUVERA CLOUD</h1>
+            <p class="tagline">Enterprise-Grade Cloud Solutions</p>
+            <div class="last-updated">
+                <i class="fas fa-calendar-alt"></i> Last Updated: November 10, 2025
+            </div>
+        </header>
+
+        <div class="policy-navigation">
+            <button class="nav-btn active" id="termsBtn">
+                <i class="fas fa-file-contract"></i> Terms of Service
+            </button>
+            <button class="nav-btn" id="privacyBtn">
+                <i class="fas fa-shield-alt"></i> Privacy Policy
+            </button>
+        </div>
+
+        <div class="policy-display">
+            <!-- Terms of Service Card -->
+            <div class="policy-card" id="termsCard">
+                <h2 class="policy-title">
+                    <i class="fas fa-gavel"></i> Terms of Service
+                </h2>
+                
+                <div class="policy-content">
+                    <div class="policy-section">
+                        <div class="section-header">
+                            <div class="section-number">1</div>
+                            <h3 class="section-title">Acceptance of Terms</h3>
+                        </div>
+                        <div class="section-content">
+                            <p>By registering for or using any service offered by Quvera Cloud, you acknowledge that you have read, understood, and agree to comply with these Terms, our Privacy Policy, and any other guidelines we publish.</p>
+                            <p>If you do not agree, you must stop using our services immediately.</p>
+                        </div>
+                    </div>
+
+                    <div class="policy-section">
+                        <div class="section-header">
+                            <div class="section-number">2</div>
+                            <h3 class="section-title">Services Covered</h3>
+                        </div>
+                        <div class="section-content">
+                            <p>These Terms apply to all Quvera Cloud services, including but not limited to:</p>
+                            <ul>
+                                <li>Cloud Hosting & VPS Services</li>
+                                <li>Game Server Hosting (Minecraft, etc.)</li>
+                                <li>Web Hosting & Domain Services</li>
+                                <li>Infrastructure & API Access</li>
+                                <li>Any related or future products under the Quvera Cloud brand.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="policy-section">
+                        <div class="section-header">
+                            <div class="section-number">3</div>
+                            <h3 class="section-title">Account Responsibilities</h3>
+                        </div>
+                        <div class="section-content">
+                            <ul>
+                                <li>You must provide accurate and complete information during registration.</li>
+                                <li>You are responsible for maintaining the confidentiality of your account credentials.</li>
+                                <li>Any activity under your account is considered your responsibility.</li>
+                                <li>You must be at least 13 years old to use our services. (If under 18, parental consent may be required.)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="policy-section">
+                        <div class="section-header">
+                            <div class="section-number">4</div>
+                            <h3 class="section-title">Acceptable Use Policy</h3>
+                        </div>
+                        <div class="section-content">
+                            <p>You agree not to use our services for:</p>
+                            <ul>
+                                <li>Hosting or distributing malware, phishing, or DDoS tools</li>
+                                <li>Running illegal or copyrighted content without permission</li>
+                                <li>Hosting pornographic, violent, or hate-related material</li>
+                                <li>Engaging in spamming, abuse, or network attacks</li>
+                                <li>Reselling services without prior written approval</li>
+                                <li>Mining cryptocurrencies or running unauthorized bots.</li>
+                            </ul>
+                            <p><span class="warning">Violation of this policy may lead to account suspension or termination without refund.</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="accept-btn">
+                    <i class="fas fa-check-circle"></i> Accept Terms
+                </button>
+            </div>
+
+            <!-- Privacy Policy Card -->
+            <div class="policy-card" id="privacyCard">
+                <h2 class="policy-title">
+                    <i class="fas fa-user-shield"></i> Privacy Policy
+                </h2>
+                
+                <div class="policy-content">
+                    <div class="policy-section">
+                        <div class="section-header">
+                            <div class="section-number">1</div>
+                            <h3 class="section-title">Information We Collect</h3>
+                        </div>
+                        <div class="section-content">
+                            <p>We collect only the information necessary to provide and manage our services effectively, including:</p>
+                            <ul>
+                                <li><span class="highlight">Account Information:</span> Name, email, and contact details.</li>
+                                <li><span class="highlight">Billing Information:</span> Payment method details (processed securely through third-party gateways).</li>
+                                <li><span class="highlight">Usage Data:</span> IP addresses, login activity, and server usage (for performance and security).</li>
+                                <li><span class="highlight">Support Data:</span> Information shared with us through tickets, chats, or forms.</li>
+                            </ul>
+                            <p>We do not sell or trade your personal information with anyone.</p>
+                        </div>
+                    </div>
+
+                    <div class="policy-section">
+                        <div class="section-header">
+                            <div class="section-number">2</div>
+                            <h3 class="section-title">How We Use Your Information</h3>
+                        </div>
+                        <div class="section-content">
+                            <p>We use collected data to:</p>
+                            <ul>
+                                <li>Create and manage your hosting account.</li>
+                                <li>Process payments and maintain billing records.</li>
+                                <li>Provide customer support and respond to requests.</li>
+                                <li>Monitor and improve service stability, security, and performance.</li>
+                                <li>Enforce our Terms of Service and prevent abuse or illegal activity.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="policy-section">
+                        <div class="section-header">
+                            <div class="section-number">3</div>
+                            <h3 class="section-title">Data Protection & Security</h3>
+                        </div>
+                        <div class="section-content">
+                            <p>We use standard industry-level protections, including encryption and restricted access, to keep your data safe.</p>
+                            <p>However, no online service can guarantee 100% security, so we recommend using strong passwords and keeping your credentials private.</p>
+                        </div>
+                    </div>
+
+                    <div class="policy-section">
+                        <div class="section-header">
+                            <div class="section-number">5</div>
+                            <h3 class="section-title">Data Retention</h3>
+                        </div>
+                        <div class="section-content">
+                            <ul>
+                                <li>Your personal data is kept as long as your account remains active.</li>
+                                <li>After account termination, data may be retained for up to 30 days for audit or legal purposes, after which it is securely deleted.</li>
+                                <li>You may request data deletion at any time by contacting support.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="accept-btn">
+                    <i class="fas fa-check-circle"></i> Accept Policy
+                </button>
+            </div>
+        </div>
+
+        <div class="contact-info">
+            <a href="mailto:support@quvera.cloud" class="contact-item">
+                <i class="fas fa-envelope"></i> support@quvera.cloud
+            </a>
+            <a href="https://quvera.cloud" class="contact-item">
+                <i class="fas fa-globe"></i> https://quvera.cloud
+            </a>
+        </div>
+
+        <footer>
+            <p>&copy; 2023 Quvera Cloud. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Custom cursor and lighting effects
+        const cursor = document.getElementById('cursor');
+        const cursorFollower = document.getElementById('cursorFollower');
+        const dynamicLighting = document.getElementById('dynamicLighting');
+        const lightFx = document.getElementById('lightFx');
+
+        document.addEventListener('mousemove', (e) => {
+            // Update cursor position
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            // Update cursor follower with delay
+            setTimeout(() => {
+                cursorFollower.style.left = e.clientX - 30 + 'px';
+                cursorFollower.style.top = e.clientY - 30 + 'px';
+            }, 100);
+            
+            // Update dynamic lighting position
+            dynamicLighting.style.left = e.clientX - 150 + 'px';
+            dynamicLighting.style.top = e.clientY - 150 + 'px';
+            
+            // Create light trail effect
+            const trail = document.createElement('div');
+            trail.classList.add('floating-element');
+            trail.style.left = e.clientX + 'px';
+            trail.style.top = e.clientY + 'px';
+            trail.style.width = '20px';
+            trail.style.height = '20px';
+            trail.style.animation = 'none';
+            trail.style.opacity = '0.7';
+            trail.style.background = 'radial-gradient(circle, var(--secondary) 0%, transparent 70%)';
+            lightFx.appendChild(trail);
+            
+            // Remove trail after animation
+            setTimeout(() => {
+                trail.style.transition = 'all 0.5s ease';
+                trail.style.opacity = '0';
+                trail.style.transform = 'scale(0)';
+                setTimeout(() => {
+                    if (lightFx.contains(trail)) {
+                        lightFx.removeChild(trail);
+                    }
+                }, 500);
+            }, 100);
+        });
+
+        // Create floating background elements
+        function createFloatingElements() {
+            const container = document.getElementById('floatingElements');
+            const elementCount = 20;
+            
+            for (let i = 0; i < elementCount; i++) {
+                const element = document.createElement('div');
+                element.classList.add('floating-element');
+                
+                // Random size between 100px and 300px
+                const size = Math.random() * 200 + 100;
+                element.style.width = `${size}px`;
+                element.style.height = `${size}px`;
+                
+                // Random starting position
+                element.style.left = `${Math.random() * 100}vw`;
+                element.style.top = `${Math.random() * 100}vh`;
+                
+                // Random animation delay
+                element.style.animationDelay = `${Math.random() * 30}s`;
+                
+                container.appendChild(element);
+            }
+        }
+
+        // Interactive hover effects for elements
+        const interactiveElements = document.querySelectorAll('.policy-card, .nav-btn, .contact-item, .accept-btn, .policy-section, .back-button');
+        
+        interactiveElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(1.5)';
+                cursorFollower.style.transform = 'scale(1.2)';
+                cursorFollower.style.borderColor = 'var(--accent)';
+                
+                // Add lighting effect to the element
+                if (!element.classList.contains('back-button')) {
+                    element.style.boxShadow = '0 0 30px rgba(108, 99, 255, 0.6)';
+                }
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                cursorFollower.style.transform = 'scale(1)';
+                cursorFollower.style.borderColor = 'var(--secondary)';
+                
+                // Remove lighting effect
+                if (element.classList.contains('policy-card')) {
+                    element.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.4)';
+                } else if (!element.classList.contains('back-button')) {
+                    element.style.boxShadow = '';
+                }
+            });
+        });
+
+        // Toggle between Terms and Privacy
+        document.getElementById('termsBtn').addEventListener('click', function() {
+            document.getElementById('termsBtn').classList.add('active');
+            document.getElementById('privacyBtn').classList.remove('active');
+            document.getElementById('termsCard').style.display = 'flex';
+            document.getElementById('privacyCard').style.display = 'none';
+        });
+
+        document.getElementById('privacyBtn').addEventListener('click', function() {
+            document.getElementById('privacyBtn').classList.add('active');
+            document.getElementById('termsBtn').classList.remove('active');
+            document.getElementById('privacyCard').style.display = 'flex';
+            document.getElementById('termsCard').style.display = 'none';
+        });
+
+        // Accept buttons animation
+        document.querySelectorAll('.accept-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check"></i> ACCEPTED!';
+                this.style.background = 'var(--success)';
+                this.style.boxShadow = '0 10px 20px rgba(0, 255, 136, 0.5)';
+                
+                // Create acceptance effect
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'radial-gradient(circle, var(--success) 0%, transparent 70%)';
+                ripple.style.width = '0';
+                ripple.style.height = '0';
+                ripple.style.left = '50%';
+                ripple.style.top = '50%';
+                ripple.style.transform = 'translate(-50%, -50%)';
+                ripple.style.transition = 'all 0.5s ease';
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.style.width = '200px';
+                    ripple.style.height = '200px';
+                    ripple.style.opacity = '0';
+                }, 10);
+                
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.style.background = 'linear-gradient(45deg, var(--primary), var(--primary-dark))';
+                    this.style.boxShadow = '0 10px 20px rgba(108, 99, 255, 0.4)';
+                    if (this.contains(ripple)) {
+                        this.removeChild(ripple);
+                    }
+                }, 2000);
+            });
+        });
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            createFloatingElements();
+            
+            // Hide privacy card initially
+            document.getElementById('privacyCard').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
